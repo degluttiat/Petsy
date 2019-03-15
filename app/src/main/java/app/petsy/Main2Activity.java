@@ -2,18 +2,17 @@ package app.petsy;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -27,16 +26,19 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setDrawerAndNavigation(toolbar);
+        setRecyclerView();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    }
 
+    private void setRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.ms_Pictures);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        MyAdapter myAdapter = new MyAdapter(getListOfPets());
+        recyclerView.setAdapter(myAdapter);
+    }
+
+    private void setDrawerAndNavigation(Toolbar toolbar) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,12 +47,6 @@ public class Main2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        RecyclerView recyclerView = findViewById(R.id.ms_Pictures);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        MyAdapter myAdapter = new MyAdapter(getListOfPets());
-        recyclerView.setAdapter(myAdapter);
-
     }
 
     @Override
@@ -61,28 +57,6 @@ public class Main2Activity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -116,7 +90,7 @@ public class Main2Activity extends AppCompatActivity
         String description1 = "description";
         String phoneNumber1 = "123456789";
         int picId1 = R.drawable.picture1;
-        PetModel petModel1 = new PetModel(city1, description1,picId1, phoneNumber1);
+        PetModel petModel1 = new PetModel(city1, description1, picId1, phoneNumber1);
 
         String city2 = "Tel Aviv";
         String description2 = "description2";
@@ -152,7 +126,7 @@ public class Main2Activity extends AppCompatActivity
         String description7 = "description";
         String phoneNumber7 = "123456789";
         int picId7 = R.drawable.picture7;
-        PetModel petModel7 = new PetModel(city7, description7,picId7, phoneNumber7);
+        PetModel petModel7 = new PetModel(city7, description7, picId7, phoneNumber7);
 
         String city9 = "Tel Aviv";
         String description9 = "description2";
