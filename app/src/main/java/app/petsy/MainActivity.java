@@ -27,15 +27,13 @@ public class MainActivity extends AppCompatActivity implements FoundFragment.OnF
             public void onClick(View v) {
                 vpPager.setCurrentItem(0);
             }
-
         });
         Button lost = findViewById(R.id.btnLost);
-        lost.setOnClickListener(new View.OnClickListener()
-
-        {
+        lost.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v){
-                vpPager.setCurrentItem(1);            }
+            public void onClick(View v) {
+                vpPager.setCurrentItem(1);
+            }
         });
     }
 
