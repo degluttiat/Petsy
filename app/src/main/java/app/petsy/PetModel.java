@@ -1,42 +1,36 @@
 package app.petsy;
 
+import java.lang.ref.SoftReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class PetModel {
-        private String location;
-        private String description;
-        private int imgResId;
-        private String phoneNumber;
-        private String date;
+    private String city;
+    private String address;
+    private String description;
+    private String imgUrl;
+    private String contacts;
+    private String date;
 
     public PetModel() {
     }
 
-    public PetModel(String location, String description, int imgResId, String phoneNumber) {
-        this.location = location;
-        this.description = description;
-        this.imgResId = imgResId;
-        this.phoneNumber = phoneNumber;
-        setDate();
+    public String getContacts() {
+        return contacts;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getCity() {
+        return city;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getDescription() {
@@ -47,26 +41,30 @@ public class PetModel {
         this.description = description;
     }
 
-    public int getImgResId() {
-        return imgResId;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgResId(int imgResId) {
-        this.imgResId = imgResId;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public void setDate(){
+    public void setDate() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = new Date();
         this.date = (dateFormat.format(date));
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getDate() {
         return date;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

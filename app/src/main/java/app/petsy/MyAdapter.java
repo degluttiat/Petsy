@@ -27,9 +27,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
-        holder.mImageView.setImageResource(petModel.getImgResId());
-        holder.locationTextView.setText(petModel.getLocation());
-        holder.postDate.setText((petModel.getDate()));
+        //holder.mImageView.setImageResource(petModel.getImgUrl());
+        holder.cityTextView.setText(petModel.getCity());
+        holder.postDate.setText((petModel.getAddress()));
     }
 
     @Override
@@ -43,14 +43,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
-        private TextView locationTextView;
-        private TextView phoneNumberTextView;
+        private TextView cityTextView;
+        private TextView contactsTextView;
         private TextView postDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.pet_picture);
-            locationTextView = itemView.findViewById(R.id.location);
+            cityTextView = itemView.findViewById(R.id.city);
             postDate = itemView.findViewById(R.id.textViewPostDate);
 
         }
