@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class LostFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView recyclerView;
 
     public LostFragment() {
         // Required empty public constructor
@@ -63,8 +66,18 @@ public class LostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_lost, container, false);
+        recyclerView = view.findViewById(R.id.ms_Pictures);
+        setRecyclerView();
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lost, container, false);
+        return view;
+    }
+
+    private void setRecyclerView() {
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        MyAdapter myAdapter = new MyAdapter(MainActivity.getListOfPets());
+        recyclerView.setAdapter(myAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
