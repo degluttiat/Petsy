@@ -3,12 +3,20 @@ package app.petsy;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 /**
@@ -31,19 +39,13 @@ public class LostFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
+    private CollectionReference collectionRef;
+    private MyAdapter myAdapter;
 
     public LostFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LostFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static LostFragment newInstance(String param1, String param2) {
         LostFragment fragment = new LostFragment();
@@ -68,15 +70,46 @@ public class LostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lost, container, false);
         recyclerView = view.findViewById(R.id.ms_Pictures);
+
+
+        collectionRef = FirebaseFirestore.getInstance().collection("lostPets");
         setRecyclerView();
+        getData();
 
         // Inflate the layout for this fragment
         return view;
     }
 
+    private void getData() {
+        collectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+
+                assert snapshots != null;
+                for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            PetModel pm = dc.getDocument().toObject(PetModel.class);
+                            myAdapter.add(pm);
+                            break;
+                        case MODIFIED:
+                            break;
+                        case REMOVED:
+                            break;
+                    }
+                }
+
+            }
+        });
+    }
+
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        MyAdapter myAdapter = new MyAdapter(MainActivity.getListOfPets());
+        myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -86,6 +119,7 @@ public class LostFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
     @Override
     public void onAttach(Context context) {

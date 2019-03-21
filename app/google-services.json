@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1040651036758",
+    "firebase_url": "https://app-petsy.firebaseio.com",
+    "project_id": "app-petsy",
+    "storage_bucket": "app-petsy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040651036758:android:20b7f99f3b2a3911",
+        "android_client_info": {
+          "package_name": "app.petsy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040651036758-k0qcuuulvpgm9ggseq7tb0qi48g5itti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.petsy",
+            "certificate_hash": "10e4c67fa78fe9ab187753342fbfd158566b89ae"
+          }
+        },
+        {
+          "client_id": "1040651036758-5er7l9ado0kmliets6ub34ditdf7ahua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8xpw64j7HlDMPXIsOPT43wwKd82NxbTc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040651036758-5er7l9ado0kmliets6ub34ditdf7ahua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

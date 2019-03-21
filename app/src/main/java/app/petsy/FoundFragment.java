@@ -3,12 +3,20 @@ package app.petsy;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 /**
@@ -31,6 +39,8 @@ public class FoundFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
+    private CollectionReference collectionRef;
+    private MyAdapter myAdapter;
 
     public FoundFragment() {
         // Required empty public constructor
@@ -68,15 +78,44 @@ public class FoundFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_found, container, false);
         recyclerView = view.findViewById(R.id.ms_Pictures);
+        collectionRef = FirebaseFirestore.getInstance().collection("foundPets");
         setRecyclerView();
+        getData();
 
         // Inflate the layout for this fragment
         return view;
     }
 
+    private void getData() {
+        collectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+
+                assert snapshots != null;
+                for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            PetModel pm = dc.getDocument().toObject(PetModel.class);
+                            myAdapter.add(pm);
+                            break;
+                        case MODIFIED:
+                            break;
+                        case REMOVED:
+                            break;
+                    }
+                }
+
+            }
+        });
+    }
+
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        MyAdapter myAdapter = new MyAdapter(MainActivity.getListOfPets());
+        myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);
     }
 

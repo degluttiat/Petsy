@@ -11,10 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
-    private ArrayList<PetModel> petsData;
+    private ArrayList<PetModel> petsData = new ArrayList<>();
 
-    public MyAdapter(ArrayList<PetModel> PetModels) {
-        petsData = PetModels;
+    public MyAdapter() {
     }
 
     @NonNull
@@ -36,6 +35,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public int getItemCount() {
         return petsData.size();
+    }
+
+    public void add(PetModel pm) {
+        petsData.add(pm);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -12,6 +12,9 @@ public class PetModel {
         private String phoneNumber;
         private String date;
 
+    public PetModel() {
+    }
+
     public PetModel(String location, String description, int imgResId, String phoneNumber) {
         this.location = location;
         this.description = description;
