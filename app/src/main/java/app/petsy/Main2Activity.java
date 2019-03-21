@@ -1,9 +1,8 @@
 package app.petsy;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +11,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,17 @@ public class Main2Activity extends AppCompatActivity
 
         setDrawerAndNavigation(toolbar);
         setRecyclerView();
+        setSearchingView();
 
+    }
+
+    private void setSearchingView() {
+        AutoCompleteTextView tv = findViewById(R.id.autoCompleteTextView);
+        String[] cities = getResources().getStringArray(R.array.array_cities);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, cities);
+        tv.setThreshold(1);//will start working from first character
+        tv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        tv.setBackgroundColor(Color.WHITE);
     }
 
     private void setRecyclerView() {
