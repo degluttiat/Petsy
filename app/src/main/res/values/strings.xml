@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Petsy</string>
-
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,4 +12,200 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <string-array name="array_cities">
+        <item>אופקים</item>
+        <item>אור יהודה</item>
+        <item>אור עקיבא</item>
+        <item>אילת</item>
+        <item>אלעד</item>
+        <item>אריאל</item>
+        <item>אשדוד</item>
+        <item>אשקלון</item>
+        <item>באר שבע</item>
+        <item>בית שאן</item>
+        <item>בית שמש</item>
+        <item>ביתר עילית</item>
+        <item>בני ברק</item>
+        <item>בת ים</item>
+        <item>גבעת שמואל</item>
+        <item>גבעתיים</item>
+        <item>דימונה</item>
+        <item>הוד השרון</item>
+        <item>הרצליה</item>
+        <item>חדרה</item>
+        <item>חולון</item>
+        <item>חיפה</item>
+        <item>טבריה</item>
+        <item>טירת כרמל</item>
+        <item>יבנה</item>
+        <item>יהוד-מונוסון</item>
+        <item>יקנעם</item>
+        <item>ירושלים</item>
+        <item>כפר סבא</item>
+        <item>כרמיאל</item>
+        <item>לוד</item>
+        <item>מגדל העמק</item>
+        <item>מודיעין עילית</item>
+        <item>מודיעין-מכבים-רעות</item>
+        <item>מעלה אדומים</item>
+        <item>מעלות-תרשיחא</item>
+        <item>נהריה</item>
+        <item>נס ציונה</item>
+        <item>נצרת עילית</item>
+        <item>נשר</item>
+        <item>נתיבות</item>
+        <item>נתניה</item>
+        <item>עכו</item>
+        <item>עפולה</item>
+        <item>ערד</item>
+        <item>פתח תקווה</item>
+        <item>צפת</item>
+        <item>קריית אונו</item>
+        <item>קריית אתא</item>
+        <item>קריית ביאליק</item>
+        <item>קריית גת</item>
+        <item>קריית ים</item>
+        <item>קריית מוצקין</item>
+        <item>קריית מלאכי</item>
+        <item>קריית שמונה</item>
+        <item>ראש העין</item>
+        <item>ראשון לציון</item>
+        <item>רחובות</item>
+        <item>רמלה</item>
+        <item>רמת גן</item>
+        <item>רמת השרון</item>
+        <item>רעננה</item>
+        <item>שדרות</item>
+        <item>תל אביב-יפו</item>
+        <item>Ofakim</item>
+        <item>Or Yehuda</item>
+        <item>Or Akiva</item>
+        <item>Eilat</item>
+        <item>Elad</item>
+        <item>Ariel</item>
+        <item>Ashdod</item>
+        <item>Ashkelon</item>
+        <item>Beer Sheva</item>
+        <item>Beit Shean</item>
+        <item>Beit Shemesh</item>
+        <item>Beitar Illit</item>
+        <item>Bnei Brak</item>
+        <item>Bat Yam</item>
+        <item>Givat Shmuel</item>
+        <item>Givatayim</item>
+        <item>Dimona</item>
+        <item>Hod Hasharon</item>
+        <item>Herzliya</item>
+        <item>Hadera</item>
+        <item>Holon</item>
+        <item>Haifa</item>
+        <item>Tiberias</item>
+        <item>Tirat Carmel</item>
+        <item>Yavne</item>
+        <item>Yehud-Monosson</item>
+        <item>Yokneam</item>
+        <item>Jerusalem</item>
+        <item>Kfar Saba</item>
+        <item>Carmiel</item>
+        <item>Lod</item>
+        <item>Migdal Haemek</item>
+        <item>Modiin Illit</item>
+        <item>Modiin Maccabim-Reut</item>
+        <item>Maale Adumim</item>
+        <item>Maalot-Tarshiha</item>
+        <item>Nahariya</item>
+        <item>Ness Ziona</item>
+        <item>Nazareth Illit</item>
+        <item>Nesher</item>
+        <item>Netivot</item>
+        <item>Netanya</item>
+        <item>Acre</item>
+        <item>Afula</item>
+        <item>Arad</item>
+        <item>Petah Tikva</item>
+        <item>Zefat</item>
+        <item>Kiryat Ono</item>
+        <item>Kiryat Ata</item>
+        <item>Kiryat Bialik</item>
+        <item>Qiryat Gat</item>
+        <item>Kiryat Yam</item>
+        <item>Kiryat Motzkin</item>
+        <item>Kiryat Malachi</item>
+        <item>Kiryat Shmona</item>
+        <item>Rosh HaAyin</item>
+        <item>Rishon Lezion</item>
+        <item>Rehovot</item>
+        <item>Ramla</item>
+        <item>Ramat Gan</item>
+        <item>Ramat Hasharon</item>
+        <item>Raanana</item>
+        <item>Sderot</item>
+        <item>Tel Aviv Jaffa</item>
+        <item>Офаким</item>
+        <item>Ор Иегуда</item>
+        <item>Ор Акива</item>
+        <item>Эйлат</item>
+        <item>Эльад</item>
+        <item>Ариэль</item>
+        <item>Ашдод</item>
+        <item>Ашкелон</item>
+        <item>Беэр Шева</item>
+        <item>Бейт Шеан</item>
+        <item>Бейт Шемеш</item>
+        <item>Бейтар Иллит</item>
+        <item>Бней Брак</item>
+        <item>Бат Ям</item>
+        <item>Гиват Шмуэль</item>
+        <item>Гиватаим</item>
+        <item>Димона</item>
+        <item>Ход ха-Шарон</item>
+        <item>Герцлия</item>
+        <item>Хадера</item>
+        <item>Холон</item>
+        <item>Хайфа</item>
+        <item>Тверия</item>
+        <item>Тират Кармель</item>
+        <item>Явне</item>
+        <item>Йехуд-Моноссон</item>
+        <item>Йокнеам</item>
+        <item>Иерусалим</item>
+        <item>Кфар Саба</item>
+        <item>Кармиэль</item>
+        <item>Лод</item>
+        <item>Мигдаль Хаэмек</item>
+        <item>Модиин Иллит</item>
+        <item>Модиин Маккабим-Реут</item>
+        <item>Маале Адумим</item>
+        <item>Маалот-Таршиха</item>
+        <item>Нагария</item>
+        <item>Нес-Циона</item>
+        <item>Назарет Иллит</item>
+        <item>Нешер</item>
+        <item>Нетивот</item>
+        <item>Нетания</item>
+        <item>Акко</item>
+        <item>Афула</item>
+        <item>Арад</item>
+        <item>Петах-Тиква</item>
+        <item>Цфат</item>
+        <item>Кирьят Оно</item>
+        <item>Кирьят Ата</item>
+        <item>Кирьят Бялик</item>
+        <item>Кирьят Гат</item>
+        <item>Кирьят Ям</item>
+        <item>Кирьят Моцкин</item>
+        <item>Кирьят Малахи</item>
+        <item>Кирьят Шмона</item>
+        <item>Рош ха-Айин</item>
+        <item>Ришон ле-Цион</item>
+        <item>Реховот</item>
+        <item>Рамле</item>
+        <item>Рамат Ган</item>
+        <item>Рамат ха-Шарон</item>
+        <item>Раанана</item>
+        <item>Сдерот</item>
+        <item>Тель-Авив Яффо</item>
+
+    </string-array>
 </resources>

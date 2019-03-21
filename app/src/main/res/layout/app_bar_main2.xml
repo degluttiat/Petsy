@@ -33,9 +33,9 @@
                 android:background="@android:color/white"
                 android:hint="Search city"
                 android:paddingLeft="16dp"
-
                 android:textColor="#222222"
-                android:textColorHint="#CCCCCC" />
+                android:textColorHint="#CCCCCC"
+                android:popupBackground="@android:color/white" />
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
