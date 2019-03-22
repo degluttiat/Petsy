@@ -4,7 +4,7 @@
     android:id="@+id/lost_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LostFragment">
+    tools:context=".ListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ms_Pictures"
