@@ -1,7 +1,6 @@
 package app.petsy;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -91,6 +90,8 @@ public class ListFragment extends Fragment {
                     switch (dc.getType()) {
                         case ADDED:
                             PetModel pm = dc.getDocument().toObject(PetModel.class);
+                            String id = dc.getDocument().getId();
+                            pm.setImgId(id);
                             myAdapter.add(pm);
                             break;
                         case MODIFIED:

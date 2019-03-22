@@ -9,7 +9,7 @@ public class PetModel {
     private String city;
     private String address;
     private String description;
-    private String imgUrl;
+    private String imgId;
     private String contacts;
     private String date;
 
@@ -40,12 +40,12 @@ public class PetModel {
         this.description = description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImgId() {
+        return imgId;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImgId(String imgId) {
+        this.imgId = imgId;
     }
 
     public void setDate() {

@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
@@ -27,9 +31,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
-        //holder.mImageView.setImageResource(petModel.getImgUrl());
+        //holder.mImageView.setImageResource(petModel.getImgId());
         holder.cityTextView.setText(petModel.getCity());
         holder.postDate.setText((petModel.getAddress()));
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference pathReference = storageReference.child("images/" + petModel.getImgId());
+
+        Glide.with(holder.mImageView.getContext())
+                .load(pathReference)
+                .into(holder.mImageView);
     }
 
     @Override
