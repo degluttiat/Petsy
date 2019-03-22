@@ -17,46 +17,53 @@
 
     <View
         android:id="@+id/viewId"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnFound"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
         android:background="@color/colorPrimary"
-    />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
         android:id="@+id/btnFound"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Found"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/viewId"
+        app:layout_constraintEnd_toStartOf="@id/btnLost"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewId" />
 
     <Button
         android:id="@+id/btnLost"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Lost"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="#DEDEDE"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/viewId"
+        app:layout_constraintEnd_toStartOf="@id/btnAdd"
+        app:layout_constraintStart_toEndOf="@id/btnFound"
+        app:layout_constraintTop_toTopOf="@id/viewId" />
 
     <Button
         android:id="@+id/btnAdd"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:text="add"
-        app:layout_constraintEnd_toStartOf="@+id/btnLost"
-        app:layout_constraintStart_toEndOf="@+id/btnFound"
-        app:layout_constraintBottom_toBottomOf="@id/btnFound" />
+        android:textColor="#DEDEDE"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/viewId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLost"
+        app:layout_constraintTop_toTopOf="@id/viewId" />
 
 
 </android.support.constraint.ConstraintLayout>

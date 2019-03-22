@@ -2,11 +2,8 @@ package app.petsy;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -33,11 +30,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    public static final String DEDEDE_COLOR = "#DEDEDE";
     private List<CityModel> citiesList = new ArrayList();
     private ViewPager vpPager;
     private MyPagerAdapter adapterViewPager;
+    private Button found;
+    private Button lost;
+    private Button add;
 
 
     @Override
@@ -54,34 +55,17 @@ public class MainActivity extends AppCompatActivity
 
         setDrawerAndNavigation(toolbar);
 
-
         getData();
 
     }
 
     private void setButtons() {
-        Button found = findViewById(R.id.btnFound);
-        found.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vpPager.setCurrentItem(0);
-            }
-        });
-        Button lost = findViewById(R.id.btnLost);
-        lost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vpPager.setCurrentItem(1);
-            }
-        });
-        Button add = findViewById(R.id.btnAdd);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
-                startActivity(myIntent);
-            }
-        });
+        found = findViewById(R.id.btnFound);
+        found.setOnClickListener(this);
+        lost = findViewById(R.id.btnLost);
+        lost.setOnClickListener(this);
+        add = findViewById(R.id.btnAdd);
+        add.setOnClickListener(this);
     }
 
     private void setViewPager() {
@@ -207,5 +191,30 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnFound:
+                vpPager.setCurrentItem(0);
+                found.setTextColor(Color.WHITE);
+                lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                break;
+            case R.id.btnLost:
+                vpPager.setCurrentItem(1);
+                lost.setTextColor(Color.WHITE);
+                found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                break;
+            case R.id.btnAdd:
+                Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
+                startActivity(myIntent);
+                add.setTextColor(Color.WHITE);
+                lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                break;
+        }
 
+
+    }
 }
