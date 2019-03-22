@@ -2,7 +2,10 @@ package app.petsy;
 
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,15 +15,29 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener {
 
+    private List<CityModel> citiesList = new ArrayList();
     private ViewPager vpPager;
+    private MyPagerAdapter adapterViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +53,7 @@ public class MainActivity extends AppCompatActivity
 
         setDrawerAndNavigation(toolbar);
 
-        setSearchingView();
-
+        getData();
 
     }
 
@@ -60,17 +76,45 @@ public class MainActivity extends AppCompatActivity
 
     private void setViewPager() {
         vpPager = findViewById(R.id.vpPager);
-        final MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
     }
 
     private void setSearchingView() {
         AutoCompleteTextView tv = findViewById(R.id.autoCompleteTextView);
-        String[] cities = getResources().getStringArray(R.array.array_cities);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, cities);
+        final List<String> cities = new ArrayList<>();
+        for (CityModel city : citiesList) {
+            cities.add(city.getHe());
+            cities.add(city.getRu());
+            cities.add(city.getEn());
+        }
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, cities);
         tv.setThreshold(1);//will start working from first character
         tv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         tv.setBackgroundColor(Color.WHITE);
+
+        tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = adapter.getItem(position);
+                String cityId = null;
+                for (CityModel cityModel : citiesList) {
+                    if (cityModel.getRu().equals(item) || cityModel.getHe().equals(item) || cityModel.getEn().equals(item)) {
+                        cityId = cityModel.getId();
+                    }
+                }
+                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
+                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 1);
+                listFragment0.getData(cityId);
+                listFragment1.getData(cityId);
+            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+        });
     }
 
     private void setDrawerAndNavigation(Toolbar toolbar) {
@@ -117,6 +161,40 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void getCitiesData() {
+
+    }
+
+    private void getData() {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("cities");
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+
+                assert snapshots != null;
+                for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            CityModel cm = dc.getDocument().toObject(CityModel.class);
+                            cm.setId(dc.getDocument().getId());
+                            citiesList.add(cm);
+                            setSearchingView();
+                            break;
+                        case MODIFIED:
+                            break;
+                        case REMOVED:
+                            break;
+                    }
+                }
+
+            }
+        });
     }
 
 

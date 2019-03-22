@@ -42,6 +42,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         notifyItemInserted(petsData.size() - 1);
     }
 
+    public void clearCollection(){
+        petsData.clear();
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
         private TextView cityTextView;
