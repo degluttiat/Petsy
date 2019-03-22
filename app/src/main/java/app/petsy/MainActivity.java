@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
         setDrawerAndNavigation(toolbar);
 
+
         getData();
 
     }
