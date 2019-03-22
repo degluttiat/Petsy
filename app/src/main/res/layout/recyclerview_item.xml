@@ -29,7 +29,7 @@
         android:focusable="true"
         android:lineSpacingExtra="8sp"
         android:marqueeRepeatLimit="marquee_forever"
-        android:text="123456789"
+        android:text="@string/_123456789"
         android:textColor="@color/colorAccent"
         android:textSize="10sp"
         android:textStyle="bold"/>
@@ -49,7 +49,7 @@
             android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lorem Ipsum"
+            android:text="@string/lorem_ipsum"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />

@@ -22,13 +22,13 @@
 
 
             android:layout_gravity="fill_vertical"
-            android:text="i lost" />
+            android:text="@string/i_lost" />
 
         <Button
             android:id="@+id/btnAddFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="i found"
+            android:text="@string/i_found"
 
              />
 
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="add photo"
+        android:text="@string/add_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descrition" />
 
