@@ -39,6 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     public void add(PetModel pm) {
         petsData.add(pm);
+        notifyItemInserted(petsData.size() - 1);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
