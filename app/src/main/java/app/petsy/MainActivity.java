@@ -1,5 +1,6 @@
 package app.petsy;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -70,6 +71,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 vpPager.setCurrentItem(1);
+            }
+        });
+        Button add = findViewById(R.id.btnAdd);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
+                startActivity(myIntent);
             }
         });
     }
