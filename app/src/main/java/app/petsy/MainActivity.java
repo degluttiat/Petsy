@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity
     private Button found;
     private Button lost;
     private Button add;
+    private View foundButtonLine;
+    private View lostButtonLine;
+    private View addButtonLine;
 
 
     @Override
@@ -62,10 +65,13 @@ public class MainActivity extends AppCompatActivity
     private void setButtons() {
         found = findViewById(R.id.btnFound);
         found.setOnClickListener(this);
+        foundButtonLine = findViewById(R.id.foundBtnLine);
         lost = findViewById(R.id.btnLost);
         lost.setOnClickListener(this);
+        lostButtonLine = findViewById(R.id.lostBtnLine);
         add = findViewById(R.id.btnAdd);
         add.setOnClickListener(this);
+        addButtonLine = findViewById(R.id.addBtnLine);
     }
 
     private void setViewPager() {
@@ -197,21 +203,30 @@ public class MainActivity extends AppCompatActivity
             case R.id.btnFound:
                 vpPager.setCurrentItem(0);
                 found.setTextColor(Color.WHITE);
+                foundButtonLine.setVisibility(View.VISIBLE);
                 lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                lostButtonLine.setVisibility(View.INVISIBLE);
                 add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                addButtonLine.setVisibility(View.INVISIBLE);
                 break;
             case R.id.btnLost:
                 vpPager.setCurrentItem(1);
                 lost.setTextColor(Color.WHITE);
+                lostButtonLine.setVisibility(View.VISIBLE);
                 found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                foundButtonLine.setVisibility(View.INVISIBLE);
                 add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                addButtonLine.setVisibility(View.INVISIBLE);
                 break;
             case R.id.btnAdd:
                 Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
                 startActivity(myIntent);
                 add.setTextColor(Color.WHITE);
+                addButtonLine.setVisibility(View.VISIBLE);
                 lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                lostButtonLine.setVisibility(View.INVISIBLE);
                 found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+                foundButtonLine.setVisibility(View.INVISIBLE);
                 break;
         }
 
