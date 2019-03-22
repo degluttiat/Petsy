@@ -9,8 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
-        implements FoundFragment.OnFragmentInteractionListener,
-        LostFragment.OnFragmentInteractionListener,
+        implements ListFragment.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager vpPager;
@@ -67,12 +62,6 @@ public class MainActivity extends AppCompatActivity
         vpPager = findViewById(R.id.vpPager);
         final MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
-    }
-
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     private void setSearchingView() {
