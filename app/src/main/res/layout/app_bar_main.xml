@@ -40,7 +40,10 @@
                 android:textColorHint="#CCCCCC"
                 android:drawablePadding="18dp"
                 android:drawableLeft="@drawable/ic_search_black_24dp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"/>
 
         </FrameLayout>
 
