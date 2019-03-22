@@ -2,7 +2,6 @@ package app.petsy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements EventListener<QuerySnapshot> {
     private static final String ARG_TYPE = "ARG_TYPE";
 
     private int type;
@@ -59,7 +58,7 @@ public class ListFragment extends Fragment {
 
         setCollectionRef();
         setRecyclerView();
-        getData();
+        getData(null);
 
         // Inflate the layout for this fragment
         return view;
@@ -76,33 +75,14 @@ public class ListFragment extends Fragment {
         collectionRef = FirebaseFirestore.getInstance().collection(collectionName);
     }
 
-    private void getData() {
-                collectionRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshots,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    return;
-                }
+    public void getData(String cityId) {
+        if (cityId != null) {
+            myAdapter.clearCollection();
+            collectionRef.whereEqualTo("city", cityId).addSnapshotListener(this);
+        } else {
+            collectionRef.addSnapshotListener(this);
+        }
 
-                assert snapshots != null;
-                for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                    switch (dc.getType()) {
-                        case ADDED:
-                            PetModel pm = dc.getDocument().toObject(PetModel.class);
-                            String id = dc.getDocument().getId();
-                            pm.setImgId(id);
-                            myAdapter.add(pm);
-                            break;
-                        case MODIFIED:
-                            break;
-                        case REMOVED:
-                            break;
-                    }
-                }
-
-            }
-        });
     }
 
     private void setRecyclerView() {
@@ -140,4 +120,29 @@ public class ListFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
     }
+
+
+    @Override
+    public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+        if (e != null) {
+            return;
+        }
+        assert queryDocumentSnapshots != null;
+        for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+            switch (dc.getType()) {
+                case ADDED:
+                    PetModel pm = dc.getDocument().toObject(PetModel.class);
+                    String id = dc.getDocument().getId();
+                    pm.setImgId(id);
+                    myAdapter.add(pm);
+                    break;
+                case MODIFIED:
+                    break;
+                case REMOVED:
+                    break;
+            }
+        }
+
+    }
 }
+
