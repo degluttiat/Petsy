@@ -27,25 +27,47 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_search_black_24dp"
-                android:drawablePadding="18dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:hint="Search city"
-                android:maxLines="1"
-                android:paddingLeft="16dp"
-                android:popupBackground="@android:color/white"
-                android:singleLine="true"
-                android:textColor="#222222"
-                android:textColorHint="#CCCCCC" />
+                android:layout_height="match_parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/white"
+                    android:drawableLeft="@drawable/ic_search_black_24dp"
+                    android:drawablePadding="18dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="Search city"
+                    android:maxLines="1"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:popupBackground="@android:color/white"
+                    android:singleLine="true"
+                    android:textColor="#222222"
+                    android:textColorHint="#CCCCCC" />
+
+                <ImageButton
+                    android:id="@+id/clearButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/autoCompleteTextView"
+                    android:layout_alignTop="@+id/autoCompleteTextView"
+                    android:layout_alignEnd="@+id/autoCompleteTextView"
+                    android:layout_alignBottom="@+id/autoCompleteTextView"
+                    android:layout_marginStart="352dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/ic_clear_black_24dp" />
+
+            </RelativeLayout>
+
 
         </FrameLayout>
 
