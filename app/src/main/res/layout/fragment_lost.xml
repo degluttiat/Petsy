@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lost_fragment"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ms_Pictures"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListFragment">
+    android:horizontalSpacing="1dp"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="1dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/ms_Pictures"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="1dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
-
-</FrameLayout>
