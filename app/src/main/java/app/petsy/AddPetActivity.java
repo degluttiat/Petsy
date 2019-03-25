@@ -22,6 +22,7 @@ public class AddPetActivity extends AppCompatActivity {
 
 
     static final int REQUEST_TAKE_PHOTO = 2;
+    private int PICK_IMAGE_REQUEST = 1;
     private String currentPhotoPath;
 
     @Override
@@ -40,8 +41,19 @@ public class AddPetActivity extends AppCompatActivity {
             }
         });
 
+        Button button2 = findViewById(R.id.btnUploadPhoto);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                uploadPhoto();
+
+            }
+        });
 
     }
+
+
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -85,6 +97,22 @@ public class AddPetActivity extends AppCompatActivity {
             //setThumbnail(data);
             setPic();
         }
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                // Log.d(TAG, String.valueOf(bitmap));
+
+                ImageView imageView = (ImageView) findViewById(R.id.imgPreview);
+                 imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void setPic() {
@@ -112,4 +140,14 @@ public class AddPetActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
     }
 
+
+
+
+
+    private void uploadPhoto()    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
 }
