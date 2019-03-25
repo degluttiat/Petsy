@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private View foundButtonLine;
     private View lostButtonLine;
     private View addButtonLine;
+    private ImageButton clearButton;
 
 
     @Override
@@ -54,12 +56,45 @@ public class MainActivity extends AppCompatActivity
 
         setViewPager();
 
+        changeFragmentListenerAndBtnBehavior();
+
         setButtons();
 
         setDrawerAndNavigation(toolbar);
 
         getData();
 
+    }
+
+    private void changeFragmentListenerAndBtnBehavior() {
+        vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                switch (i) {
+                    case 0:
+                        foundButtonSelectedBehavior();
+                        break;
+                    case 1:
+                        lostButtonSelectedBehavior();
+                        break;
+                    case 2:
+                        addButtonSelectedBehavior();
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     private void setButtons() {
@@ -72,6 +107,8 @@ public class MainActivity extends AppCompatActivity
         add = findViewById(R.id.btnAdd);
         add.setOnClickListener(this);
         addButtonLine = findViewById(R.id.addBtnLine);
+        clearButton = findViewById(R.id.clearButton);
+        clearButton.setOnClickListener(this);
     }
 
     private void setViewPager() {
@@ -109,11 +146,6 @@ public class MainActivity extends AppCompatActivity
                 listFragment0.getData(cityId);
                 listFragment1.getData(cityId);
             }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
         });
     }
 
@@ -202,34 +234,48 @@ public class MainActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.btnFound:
                 vpPager.setCurrentItem(0);
-                found.setTextColor(Color.WHITE);
-                foundButtonLine.setVisibility(View.VISIBLE);
-                lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                lostButtonLine.setVisibility(View.INVISIBLE);
-                add.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                addButtonLine.setVisibility(View.INVISIBLE);
+                foundButtonSelectedBehavior();
                 break;
             case R.id.btnLost:
                 vpPager.setCurrentItem(1);
-                lost.setTextColor(Color.WHITE);
-                lostButtonLine.setVisibility(View.VISIBLE);
-                found.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                foundButtonLine.setVisibility(View.INVISIBLE);
-                add.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                addButtonLine.setVisibility(View.INVISIBLE);
+                lostButtonSelectedBehavior();
                 break;
             case R.id.btnAdd:
                 Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
                 startActivity(myIntent);
-                add.setTextColor(Color.WHITE);
-                addButtonLine.setVisibility(View.VISIBLE);
-                lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                lostButtonLine.setVisibility(View.INVISIBLE);
-                found.setTextColor(Color.parseColor(DEDEDE_COLOR));
-                foundButtonLine.setVisibility(View.INVISIBLE);
+                addButtonSelectedBehavior();
+                break;
+            case R.id.clearButton:
+//                tv.clearListSelection();
+                System.out.println("clicked");
                 break;
         }
+    }
 
+    private void addButtonSelectedBehavior() {
+        add.setTextColor(Color.WHITE);
+        addButtonLine.setVisibility(View.VISIBLE);
+        lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lostButtonLine.setVisibility(View.INVISIBLE);
+        found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        foundButtonLine.setVisibility(View.INVISIBLE);
+    }
 
+    private void lostButtonSelectedBehavior() {
+        lost.setTextColor(Color.WHITE);
+        lostButtonLine.setVisibility(View.VISIBLE);
+        found.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        foundButtonLine.setVisibility(View.INVISIBLE);
+        add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        addButtonLine.setVisibility(View.INVISIBLE);
+    }
+
+    private void foundButtonSelectedBehavior() {
+        found.setTextColor(Color.WHITE);
+        foundButtonLine.setVisibility(View.VISIBLE);
+        lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lostButtonLine.setVisibility(View.INVISIBLE);
+        add.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        addButtonLine.setVisibility(View.INVISIBLE);
     }
 }
