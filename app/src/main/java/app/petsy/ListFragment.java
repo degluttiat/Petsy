@@ -91,6 +91,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
         recyclerView.setAdapter(myAdapter);
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

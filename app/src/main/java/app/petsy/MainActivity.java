@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity
         vpPager = findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+        vpPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
     private void setSearchingView() {
@@ -126,7 +127,9 @@ public class MainActivity extends AppCompatActivity
             cities.add(city.getEn());
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, cities);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.select_dialog_item,
+                cities);
         tv.setThreshold(1);//will start working from first character
         tv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         tv.setBackgroundColor(Color.WHITE);
@@ -176,17 +179,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_found) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_lost) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_add) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

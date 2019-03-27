@@ -15,9 +15,9 @@
     <string name="add">הוספה</string>
     <string name="_123456789">123456789</string>
     <string name="lorem_ipsum">Lorem Ipsum</string>
-    <string name="import2">Import</string>
-    <string name="gallery">גלריה</string>
-    <string name="slideshow">Slideshow</string>
+    <string name="drawer_found">Import</string>
+    <string name="drawer_lost">גלריה</string>
+    <string name="drawer_add">Slideshow</string>
     <string name="communicate">Communicate</string>
     <string name="share">שיתוף</string>
     <string name="send">שליחה</string>
