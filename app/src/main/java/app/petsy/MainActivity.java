@@ -187,6 +187,8 @@ public class MainActivity extends AppCompatActivity
             vpPager.setCurrentItem(1);
         } else if (id == R.id.nav_add) {
 
+        } else if (id == R.id.nav_about) {
+
         } else if (id == R.id.nav_share) {
 
         }
