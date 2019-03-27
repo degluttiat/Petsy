@@ -26,4 +26,6 @@
     <string name="upload_photo">העלאת תמונה</string>
     <string name="lost_2">נאבדו</string>
     <string name="about">אודות</string>
+    <string name="choose_one">תבחרו</string>
+    <string name="let_me_recommend_you">תרשו לי להמליץ על האפליקציה הזאת</string>
 </resources>

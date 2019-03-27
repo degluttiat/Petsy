@@ -26,4 +26,6 @@
     <string name="upload_photo">Загрузить фотографию</string>
     <string name="lost_2">Потерянные</string>
     <string name="about">О нас</string>
+    <string name="choose_one">Выберите</string>
+    <string name="let_me_recommend_you">Позвольте мне посоветовать вам это приложение</string>
 </resources>

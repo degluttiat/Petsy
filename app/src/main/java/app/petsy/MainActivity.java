@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        ListFragment listFragment = new ListFragment();
+
         if (id == R.id.nav_found) {
             // Handle the camera action
             vpPager.setCurrentItem(0);
@@ -190,7 +190,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_share) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "Petsy");
+            String message = getString(R.string.let_me_recommend_you) + "\n\n*Your app link* ";
 
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(Intent.createChooser(i, getString(R.string.choose_one)));
         }
 
 

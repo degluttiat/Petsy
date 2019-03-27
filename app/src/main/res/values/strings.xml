@@ -26,5 +26,7 @@
     <string name="add">add</string>
     <string name="lost_2">Lost</string>
     <string name="about">About</string>
+    <string name="choose_one">choose one</string>
+    <string name="let_me_recommend_you">Let me recommend you this application</string>
 
 </resources>
