@@ -182,9 +182,9 @@ public class MainActivity extends AppCompatActivity
         ListFragment listFragment = new ListFragment();
         if (id == R.id.nav_found) {
             // Handle the camera action
-
+            vpPager.setCurrentItem(0);
         } else if (id == R.id.nav_lost) {
-
+            vpPager.setCurrentItem(1);
         } else if (id == R.id.nav_add) {
 
         } else if (id == R.id.nav_share) {
