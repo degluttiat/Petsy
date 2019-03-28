@@ -17,10 +17,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     private ArrayList<PetModel> petsData = new ArrayList<>();
+    private final ListFragment.OnFragmentInteractionListener mListener;
 
-    public MyRecyclerViewAdapter() {
+    public MyRecyclerViewAdapter(ListFragment.OnFragmentInteractionListener mListener) {
+        this.mListener = mListener;
     }
 
     @NonNull
@@ -28,12 +30,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.recyclerview_item, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view, mListener);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
+        holder.petModel = petModel;
         //holder.mImageView.setImageResource(petModel.getImgId());
         holder.cityTextView.setText(petModel.getCity());
         holder.postDate.setText((petModel.getAddress()));
@@ -63,22 +67,33 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         notifyItemInserted(petsData.size() - 1);
     }
 
-    public void clearCollection(){
+    public void clearCollection() {
         petsData.clear();
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView;
         private TextView cityTextView;
         private TextView contactsTextView;
         private TextView postDate;
+        private PetModel petModel;
+        private ListFragment.OnFragmentInteractionListener mListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, ListFragment.OnFragmentInteractionListener mListener) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mImageView = itemView.findViewById(R.id.pet_picture);
             cityTextView = itemView.findViewById(R.id.city);
             postDate = itemView.findViewById(R.id.textViewPostDate);
+            this.mListener = mListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
+                mListener.onItemClicked(petModel);
+            }
 
         }
     }
