@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,13 +16,18 @@ import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,13 +40,14 @@ public class AddPetFragment extends Fragment {
     private String currentPhotoPath;
     private File photoFileForCamera;
     private ImageView imageView;
+    private AutoCompleteTextView searchingView;
 
     public AddPetFragment() {
         // Required empty public constructor
     }
 
     public static AddPetFragment newInstance() {
-        return  new AddPetFragment();
+        return new AddPetFragment();
     }
 
     @Override
@@ -69,6 +76,8 @@ public class AddPetFragment extends Fragment {
                 runTakePhotoFromGalleryIntent();
             }
         });
+        searchingView = view.findViewById(R.id.city);
+        setAutoComplete();
     }
 
     private void runTakePhotoIntent() {
@@ -112,6 +121,33 @@ public class AddPetFragment extends Fragment {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
+    void setAutoComplete() {
+        final List<String> cities = new ArrayList<>();
+        final List<CityModel> citiesList = mListener.getCitiesList();
+        for (CityModel city : citiesList) {
+            cities.add(city.getHe());
+            cities.add(city.getRu());
+            cities.add(city.getEn());
+        }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.select_dialog_item,
+                cities);
+        searchingView.setThreshold(1);//will start working from first character
+        searchingView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        searchingView.setBackgroundColor(Color.WHITE);
+
+        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = adapter.getItem(position);
+                String chosenCityID = mListener.getChosenCityID(item);
+            }
+        });
+
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -185,5 +221,9 @@ public class AddPetFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
+        List<CityModel> getCitiesList();
+
+        String getChosenCityID(String cityName);
     }
 }
