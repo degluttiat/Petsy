@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddPetActivity">
@@ -9,7 +15,7 @@
 
     <Button
         android:id="@+id/btnAddLost"
-        android:layout_width="194dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
 
@@ -41,9 +47,9 @@
         android:id="@+id/city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:hint="@string/city"
         android:layout_marginTop="12dp "
+        android:padding="16dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +119,7 @@
 
     <Button
         android:id="@+id/btnaddPhoto"
-        android:layout_width="193dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -140,7 +146,7 @@
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="395dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -152,8 +158,8 @@
 
     <Button
         android:id="@+id/btnUploadPhoto"
-        android:layout_width="194dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/upload_photo"
@@ -163,3 +169,5 @@
 
 
 </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
