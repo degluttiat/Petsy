@@ -19,8 +19,11 @@ import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
     private ArrayList<PetModel> petsData = new ArrayList<>();
+    ListFragment.OnFragmentInteractionListener mListener;
 
-    public MyRecyclerViewAdapter() {
+
+    public MyRecyclerViewAdapter(ListFragment.OnFragmentInteractionListener mListener) {
+        this.mListener = mListener;
     }
 
     @NonNull
@@ -35,7 +38,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
         //holder.mImageView.setImageResource(petModel.getImgId());
-        holder.cityTextView.setText(petModel.getCity());
+        String city = petModel.getCity();
+        String cityName = mListener.getCityById(city);
+        holder.cityTextView.setText(cityName);
         holder.postDate.setText((petModel.getAddress()));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();

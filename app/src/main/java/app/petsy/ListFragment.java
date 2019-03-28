@@ -89,7 +89,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
 
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter();
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(mListener);
         recyclerView.setAdapter(myRecyclerViewAdapter);
     }
 
@@ -122,6 +122,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
+        String getCityById(String id);
     }
 
 

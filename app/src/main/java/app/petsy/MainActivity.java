@@ -3,6 +3,7 @@ package app.petsy;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,8 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
@@ -314,5 +316,23 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return null;
+    }
+
+    @Override
+    public String getCityById(String id) {
+        for (CityModel cityModel : citiesList) {
+            if (cityModel.getId().equals(id)) {
+                String lang = Locale.getDefault().getLanguage();
+                Log.d("ZAQ", "Language: " + lang);
+                if (lang.equals("ru")) {
+                    return cityModel.ru;
+                } else if (lang.equals("he")) {
+                    return cityModel.he;
+                } else {
+                    return cityModel.en;
+                }
+            }
+        }
+        return "Unknown";
     }
 }
