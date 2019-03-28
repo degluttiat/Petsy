@@ -50,7 +50,6 @@ public class AddPetActivity extends AppCompatActivity {
         });
     }
 
-
     private void runTakePhotoIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -132,7 +131,6 @@ public class AddPetActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
     }
-
 
     private void onImageReceivedFromGallery(Intent data) {
         Uri uri = data.getData();
