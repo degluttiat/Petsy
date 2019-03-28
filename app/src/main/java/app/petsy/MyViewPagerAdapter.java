@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class MyPagerAdapter extends FragmentPagerAdapter {
+public class MyViewPagerAdapter extends FragmentPagerAdapter {
     private static int NUM_ITEMS = 3;
 
-    public MyPagerAdapter(FragmentManager fragmentManager) {
+    public MyViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 

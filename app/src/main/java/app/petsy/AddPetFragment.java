@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,13 +16,18 @@ import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,6 +40,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private String currentPhotoPath;
     private File photoFileForCamera;
     private ImageView imageView;
+    private AutoCompleteTextView searchingView;
 
     public AddPetFragment() {
         // Required empty public constructor
@@ -57,6 +64,9 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnaddPhoto).setOnClickListener(this);
         view.findViewById(R.id.btnUploadPhoto).setOnClickListener(this);
         view.findViewById(R.id.btnSubmit).setOnClickListener(this);
+
+        searchingView = view.findViewById(R.id.city);
+        setAutoComplete();
     }
 
     @Override
@@ -119,12 +129,39 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         return image;
     }
 
+    void setAutoComplete() {
+        final List<String> cities = new ArrayList<>();
+        final List<CityModel> citiesList = mListener.getCitiesList();
+        for (CityModel city : citiesList) {
+            cities.add(city.getHe());
+            cities.add(city.getRu());
+            cities.add(city.getEn());
+        }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.select_dialog_item,
+                cities);
+        searchingView.setThreshold(1);//will start working from first character
+        searchingView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        searchingView.setBackgroundColor(Color.WHITE);
+
+        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = adapter.getItem(position);
+                String chosenCityID = mListener.getChosenCityID(item);
+            }
+        });
+
+
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FROM_CAMERA && resultCode == RESULT_OK) {
-/*            PetModel petModel = new PetModel();
+            PetModel petModel = new PetModel();
             petModel.setCity("Petah Tikva");
-            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);*/
+            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);
             onImageReceivedFromCamera();
         }
 
@@ -191,5 +228,9 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
+        List<CityModel> getCitiesList();
+
+        String getChosenCityID(String cityName);
     }
 }

@@ -17,10 +17,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
     private ArrayList<PetModel> petsData = new ArrayList<>();
 
-    public MyAdapter() {
+    public MyRecyclerViewAdapter() {
     }
 
     @NonNull
