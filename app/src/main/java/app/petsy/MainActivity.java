@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("ZAQ", "Language: " + lang);
                 if (lang.equals("ru")) {
                     return cityModel.ru;
-                } else if (lang.equals("he")) {
+                } else if (lang.equals("iw")) {
                     return cityModel.he;
                 } else {
                     return cityModel.en;
