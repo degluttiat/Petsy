@@ -12,35 +12,34 @@
         tools:context=".AddPetActivity">
 
 
-        <Button
-            android:id="@+id/btnAddLost"
-            android:layout_width="0dp"
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
-            android:layout_gravity="fill_vertical"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/i_lost"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnAddFound"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnAddFound"
-            android:layout_width="193dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/i_found"
-            app:layout_constraintEnd_toStartOf="@+id/btnAddLost"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <RadioButton
+                android:id="@+id/radioFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/i_found"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radioLost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/i_lost"
+                android:textSize="20sp" />
+
+
+        </RadioGroup>
 
         <!--        <AutoCompleteTextView
                     android:id="@+id/city"
@@ -62,7 +61,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnAddLost">
+            app:layout_constraintTop_toBottomOf="@id/radioGroup">
 
             <app.petsy.TextInputAutoCompleteTextView
                 android:id="@+id/city"
@@ -136,20 +135,43 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnaddPhoto"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvAddPhoto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:drawableLeft="@drawable/ic_menu_camera"
-            android:drawablePadding="8dp"
-            android:text="@string/add_photo"
-            app:layout_constraintEnd_toStartOf="@+id/btnUploadPhoto"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="3dp"
+            android:textSize="16sp"
+            android:text="Add photo "
+            app:layout_constraintBottom_toTopOf="@id/imgPreview"
+            app:layout_constraintEnd_toStartOf="@+id/btnaddPhoto"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descrition" />
+
+        <ImageView
+            android:id="@+id/btnaddPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:src="@drawable/ic_menu_camera"
+            app:layout_constraintEnd_toStartOf="@+id/btnUploadPhoto"
+            app:layout_constraintStart_toEndOf="@id/tvAddPhoto"
             app:layout_constraintTop_toBottomOf="@+id/descrition" />
+
+        <ImageView
+            android:id="@+id/btnUploadPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnaddPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/descrition"
+            app:srcCompat="@drawable/ic_gallery" />
+
+
+
 
         <ImageView
             android:id="@+id/imgPreview"
@@ -176,16 +198,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgPreview" />
 
-        <Button
-            android:id="@+id/btnUploadPhoto"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/upload_photo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnaddPhoto"
-            app:layout_constraintTop_toBottomOf="@+id/descrition" />
 
 
     </android.support.constraint.ConstraintLayout>
