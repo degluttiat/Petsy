@@ -47,8 +47,8 @@
         android:id="@+id/city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/city"
         android:layout_marginTop="12dp "
-        android:hint="City"
         android:padding="16dp"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
         android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Address"
+        android:hint="@string/address"
         android:padding="16dp"
 
 
@@ -84,7 +84,7 @@
         android:id="@+id/contacts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Contacts"
+        android:hint="@string/contacts"
         android:padding="16dp"
 
 
@@ -103,7 +103,7 @@
         android:id="@+id/descrition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Description"
+        android:hint="@string/description"
         android:padding="16dp"
 
 
