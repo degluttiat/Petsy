@@ -152,9 +152,9 @@ public class AddPetFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FROM_CAMERA && resultCode == RESULT_OK) {
-/*            PetModel petModel = new PetModel();
+            PetModel petModel = new PetModel();
             petModel.setCity("Petah Tikva");
-            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);*/
+            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);
             onImageReceivedFromCamera();
         }
 
