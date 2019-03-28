@@ -11,7 +11,7 @@
     <string name="found">נמצאו</string>
     <string name="i_lost">איבדתי</string>
     <string name="i_found">מצאתי</string>
-    <string name="add_photo">הוספת תמונה</string>
+    <string name="add_photo">צילום</string>
     <string name="add">הוספה</string>
     <string name="_123456789">123456789</string>
     <string name="lorem_ipsum">Lorem Ipsum</string>
@@ -23,7 +23,7 @@
     <string name="send">שליחה</string>
     <string name="tools">כלים</string>
     <string name="submit">שליחה</string>
-    <string name="upload_photo">העלאת תמונה</string>
+    <string name="upload_photo">גלריה</string>
     <string name="lost_2">נאבדו</string>
     <string name="about">אודות</string>
     <string name="choose_one">תבחרו</string>
@@ -37,4 +37,9 @@
 אם איבדתם את חברכם הקטן, פרסמו את התמונה שלו ואת פרטי ההתקשרות שלכם באפליקציה שלנו.
 \n\n
 אם מצאתם בעל חיים ללא השגחה - אל תתאצלו, תעזרו להציל חיים קטנים ולמלא אותם שוב באושר!</string>
+    <string name="city">עיר</string>
+    <string name="address">כתובת</string>
+    <string name="contacts">פרטי התקשרות</string>
+    <string name="description">תיאור</string>
+    <string name="search_city">חיפוש עיר</string>
 </resources>

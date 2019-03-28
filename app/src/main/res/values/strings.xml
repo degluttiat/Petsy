@@ -29,5 +29,10 @@
     <string name="choose_one">choose one</string>
     <string name="let_me_recommend_you">Let me recommend you this application</string>
     <string name="Many_people">Many people will agree with us about animals being loyal friends, family members and an amazing source of positivity in our lives. \n\nThat\'s why having your pet lost on the streets for some reason, totally helpless, is such a terrible experience. \n\nWe offer our help to pets and to their owners, so they could meet each other again! \n\nIn case that you have lost your little friend, publish its photo and your contact details in our app. \n\nIf you found someone else\'s pet - please do the small effort and help it to get saved!</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="contacts">Contacts</string>
+    <string name="description">Description</string>
+    <string name="search_city">Search city</string>
 
 </resources>
