@@ -80,6 +80,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
             myAdapter.clearCollection();
             collectionRef.whereEqualTo("city", cityId).addSnapshotListener(this);
         } else {
+            myAdapter.clearCollection();
             collectionRef.addSnapshotListener(this);
         }
 

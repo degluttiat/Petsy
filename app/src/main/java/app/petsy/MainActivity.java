@@ -1,6 +1,6 @@
 package app.petsy;
 
-import  android.content.Intent;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private View lostButtonLine;
     private View addButtonLine;
     private ImageButton clearButton;
+    private AutoCompleteTextView searchingView;
 
 
     @Override
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchingView = findViewById(R.id.autoCompleteTextView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         getData();
 
     }
+
 
     private void changeFragmentListenerAndBtnBehavior() {
         vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -121,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setSearchingView() {
-        AutoCompleteTextView tv = findViewById(R.id.autoCompleteTextView);
         final List<String> cities = new ArrayList<>();
         for (CityModel city : citiesList) {
             cities.add(city.getHe());
@@ -132,11 +135,11 @@ public class MainActivity extends AppCompatActivity
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.select_dialog_item,
                 cities);
-        tv.setThreshold(1);//will start working from first character
-        tv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
-        tv.setBackgroundColor(Color.WHITE);
+        searchingView.setThreshold(1);//will start working from first character
+        searchingView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        searchingView.setBackgroundColor(Color.WHITE);
 
-        tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = adapter.getItem(position);
@@ -259,7 +262,12 @@ public class MainActivity extends AppCompatActivity
                 addButtonSelectedBehavior();
                 break;
             case R.id.clearButton:
-//                tv.clearListSelection();
+                searchingView.setText("");
+                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
+                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 1);
+                listFragment0.getData(null);
+                listFragment1.getData(null);
+
                 System.out.println("clicked");
                 break;
         }
