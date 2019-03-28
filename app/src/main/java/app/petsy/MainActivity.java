@@ -1,7 +1,8 @@
 package app.petsy;
 
-import android.content.Intent;
+import  android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
-        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AddPetFragment.OnFragmentInteractionListener {
 
     public static final String DEDEDE_COLOR = "#DEDEDE";
     private List<CityModel> citiesList = new ArrayList();
@@ -289,5 +290,10 @@ public class MainActivity extends AppCompatActivity
         lostButtonLine.setVisibility(View.INVISIBLE);
         add.setTextColor(Color.parseColor(DEDEDE_COLOR));
         addButtonLine.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
