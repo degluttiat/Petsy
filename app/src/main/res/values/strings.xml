@@ -34,5 +34,6 @@
     <string name="contacts">Contacts</string>
     <string name="description">Description</string>
     <string name="search_city">Search city</string>
+    <string name="post">Post submitted</string>
 
 </resources>

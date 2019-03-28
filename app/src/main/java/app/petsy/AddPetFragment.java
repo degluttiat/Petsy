@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,17 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private File photoFileForCamera;
     private ImageView imageView;
     private AutoCompleteTextView searchingView;
+    private String collectionName = DataProvider.FOUND_PET;
+    private RadioButton foundRadioButton;
+    private RadioButton lostRadioButton;
+    private EditText editTextAddress;
+    private EditText editTextContacts;
+    private EditText editTextDescrition;
+    private String cityId;
+    private String address;
+    private String contacts;
+    private String descrition;
+
 
     public AddPetFragment() {
         // Required empty public constructor
@@ -65,9 +78,19 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnUploadPhoto).setOnClickListener(this);
         view.findViewById(R.id.btnSubmit).setOnClickListener(this);
 
+        editTextAddress = view.findViewById(R.id.etAddress);
+        editTextContacts = view.findViewById(R.id.etContacts);
+        editTextDescrition = view.findViewById(R.id.edDescrition);
+
+        foundRadioButton = view.findViewById(R.id.radioFound);
+        foundRadioButton.setOnClickListener(this);
+        lostRadioButton = view.findViewById(R.id.radioLost);
+        lostRadioButton.setOnClickListener(this);
+
         searchingView = view.findViewById(R.id.city);
         setAutoComplete();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -81,10 +104,50 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnSubmit:
+                getTexts();
+                PetModel petModel = getPetModel();
 
+                DataProvider.addPet(petModel, photoFileForCamera, collectionName);
+
+                clearData();
+
+                Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
 
                 break;
+
+            case R.id.radioFound:
+                collectionName = DataProvider.FOUND_PET;
+                break;
+
+            case R.id.radioLost:
+                collectionName = DataProvider.LOST_PET;
+                break;
         }
+    }
+
+    private void clearData() {
+        editTextAddress.setText("");
+        editTextContacts.setText("");
+        editTextDescrition.setText("");
+        searchingView.setText("");
+        imageView.setImageResource(0);
+    }
+
+    @NonNull
+    private PetModel getPetModel() {
+        PetModel petModel = new PetModel();
+        petModel.setCity(cityId);
+        petModel.setAddress(address);
+        petModel.setContacts(contacts);
+        petModel.setDescription(descrition);
+        return petModel;
+    }
+
+    private void getTexts() {
+        cityId = mListener.getChosenCityID(searchingView.getText().toString());
+        address = editTextAddress.getText().toString();
+        contacts = editTextAddress.getText().toString();
+        descrition = editTextAddress.getText().toString();
     }
 
     private void runTakePhotoIntent() {
@@ -159,9 +222,9 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FROM_CAMERA && resultCode == RESULT_OK) {
-            PetModel petModel = new PetModel();
+            /*PetModel petModel = new PetModel();
             petModel.setCity("Petah Tikva");
-            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);
+            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);*/
             onImageReceivedFromCamera();
         }
 
