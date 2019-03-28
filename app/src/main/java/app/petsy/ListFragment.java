@@ -29,7 +29,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private CollectionReference collectionRef;
-    private MyAdapter myAdapter;
+    private MyRecyclerViewAdapter myRecyclerViewAdapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -78,10 +78,10 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
 
     public void getData(String cityId) {
         if (cityId != null) {
-            myAdapter.clearCollection();
+            myRecyclerViewAdapter.clearCollection();
             collectionRef.whereEqualTo("city", cityId).addSnapshotListener(this);
         } else {
-            myAdapter.clearCollection();
+            myRecyclerViewAdapter.clearCollection();
             collectionRef.addSnapshotListener(this);
         }
 
@@ -89,8 +89,8 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
 
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        myAdapter = new MyAdapter();
-        recyclerView.setAdapter(myAdapter);
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter();
+        recyclerView.setAdapter(myRecyclerViewAdapter);
     }
 
 
@@ -138,7 +138,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                     String id = dc.getDocument().getId();
                     Log.d("ZAQ", "ID: " + id);
                     pm.setImgId(id);
-                    myAdapter.add(pm);
+                    myRecyclerViewAdapter.add(pm);
                     break;
                 case MODIFIED:
                     break;
@@ -146,7 +146,6 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                     break;
             }
         }
-
     }
 }
 
