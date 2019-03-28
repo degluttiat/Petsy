@@ -25,7 +25,7 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
-public class AddPetFragment extends Fragment {
+public class AddPetFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,7 +40,7 @@ public class AddPetFragment extends Fragment {
     }
 
     public static AddPetFragment newInstance() {
-        return  new AddPetFragment();
+        return new AddPetFragment();
     }
 
     @Override
@@ -54,21 +54,27 @@ public class AddPetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imageView = view.findViewById(R.id.imgPreview);
-        Button button = view.findViewById(R.id.btnaddPhoto);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runTakePhotoIntent();
-            }
-        });
+        view.findViewById(R.id.btnaddPhoto).setOnClickListener(this);
+        view.findViewById(R.id.btnUploadPhoto).setOnClickListener(this);
+        view.findViewById(R.id.btnSubmit).setOnClickListener(this);
+    }
 
-        Button button2 = view.findViewById(R.id.btnUploadPhoto);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnaddPhoto:
+                runTakePhotoIntent();
+                break;
+
+            case R.id.btnUploadPhoto:
                 runTakePhotoFromGalleryIntent();
-            }
-        });
+                break;
+
+            case R.id.btnSubmit:
+
+
+                break;
+        }
     }
 
     private void runTakePhotoIntent() {
@@ -129,7 +135,6 @@ public class AddPetFragment extends Fragment {
     }
 
     private void onImageReceivedFromCamera() {
-
         // Get the dimensions of the View
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
@@ -150,6 +155,7 @@ public class AddPetFragment extends Fragment {
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
         imageView.setImageBitmap(bitmap);
     }
 
