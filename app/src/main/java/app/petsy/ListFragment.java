@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,6 +135,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                 case ADDED:
                     PetModel pm = dc.getDocument().toObject(PetModel.class);
                     String id = dc.getDocument().getId();
+                    Log.d("ZAQ", "ID: " + id);
                     pm.setImgId(id);
                     myAdapter.add(pm);
                     break;

@@ -1,7 +1,9 @@
 package app.petsy;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -29,18 +32,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
         //holder.mImageView.setImageResource(petModel.getImgId());
         holder.cityTextView.setText(petModel.getCity());
         holder.postDate.setText((petModel.getAddress()));
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference pathReference = storageReference.child("images/" + petModel.getImgId());
-
-        Glide.with(holder.mImageView.getContext())
-                .load(pathReference)
-                .into(holder.mImageView);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        Log.d("ZAQ", "ID 2:" + petModel.getImgId());
+        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
+        Log.d("ZAQ", "storageRef:" + storageRef.getPath());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(holder.mImageView.getContext())
+                        .load(uri.toString())
+                        .error(R.mipmap.ic_launcher)
+                        .into(holder.mImageView);
+            }
+        });
     }
 
     @Override

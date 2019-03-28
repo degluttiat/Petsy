@@ -21,7 +21,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 2) {
-            return AddPetFragment.newInstance("","");
+            return AddPetFragment.newInstance();
         } else {
             return ListFragment.newInstance(position);
         }

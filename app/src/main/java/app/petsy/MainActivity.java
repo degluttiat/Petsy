@@ -187,8 +187,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_lost) {
             vpPager.setCurrentItem(1);
         } else if (id == R.id.nav_add) {
-            Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
-            startActivity(myIntent);
+            vpPager.setCurrentItem(2);
         } else if (id == R.id.nav_about) {
             Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(myIntent);
@@ -254,8 +253,7 @@ public class MainActivity extends AppCompatActivity
                 lostButtonSelectedBehavior();
                 break;
             case R.id.btnAdd:
-                Intent myIntent = new Intent(MainActivity.this, AddPetActivity.class);
-                startActivity(myIntent);
+                vpPager.setCurrentItem(2);
                 addButtonSelectedBehavior();
                 break;
             case R.id.clearButton:
