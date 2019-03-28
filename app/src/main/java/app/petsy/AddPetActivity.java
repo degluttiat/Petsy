@@ -24,6 +24,7 @@ public class AddPetActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 2;
     private int PICK_IMAGE_REQUEST = 1;
     private String currentPhotoPath;
+    private File photoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,7 @@ public class AddPetActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getPhotoIntentLaunch();
                 dispatchTakePictureIntent();
-
             }
         });
 
@@ -45,14 +44,11 @@ public class AddPetActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 uploadPhoto();
-
             }
         });
 
     }
-
 
 
     private void dispatchTakePictureIntent() {
@@ -60,7 +56,6 @@ public class AddPetActivity extends AppCompatActivity {
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
@@ -95,6 +90,9 @@ public class AddPetActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             //setThumbnail(data);
+            PetModel petModel = new PetModel();
+            petModel.setCity("Petah Tikva");
+            DataProvider.addPet(petModel, photoFile, DataProvider.FOUND_PET);
             setPic();
         }
 
@@ -106,8 +104,8 @@ public class AddPetActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
 
-                ImageView imageView = (ImageView) findViewById(R.id.imgPreview);
-                 imageView.setImageBitmap(bitmap);
+                ImageView imageView = findViewById(R.id.imgPreview);
+                imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -141,10 +139,7 @@ public class AddPetActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    private void uploadPhoto()    {
+    private void uploadPhoto() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
