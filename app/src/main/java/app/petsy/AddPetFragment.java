@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +33,7 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class AddPetFragment extends Fragment {
+public class AddPetFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,6 +43,17 @@ public class AddPetFragment extends Fragment {
     private File photoFileForCamera;
     private ImageView imageView;
     private AutoCompleteTextView searchingView;
+    private String collectionName = DataProvider.FOUND_PET;
+    private RadioButton foundRadioButton;
+    private RadioButton lostRadioButton;
+    private EditText editTextAddress;
+    private EditText editTextContacts;
+    private EditText editTextDescrition;
+    private String cityId;
+    private String address;
+    private String contacts;
+    private String descrition;
+
 
     public AddPetFragment() {
         // Required empty public constructor
@@ -61,23 +74,80 @@ public class AddPetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imageView = view.findViewById(R.id.imgPreview);
-        Button button = view.findViewById(R.id.btnaddPhoto);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runTakePhotoIntent();
-            }
-        });
+        view.findViewById(R.id.btnaddPhoto).setOnClickListener(this);
+        view.findViewById(R.id.btnUploadPhoto).setOnClickListener(this);
+        view.findViewById(R.id.btnSubmit).setOnClickListener(this);
 
-        Button button2 = view.findViewById(R.id.btnUploadPhoto);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runTakePhotoFromGalleryIntent();
-            }
-        });
+        editTextAddress = view.findViewById(R.id.etAddress);
+        editTextContacts = view.findViewById(R.id.etContacts);
+        editTextDescrition = view.findViewById(R.id.edDescrition);
+
+        foundRadioButton = view.findViewById(R.id.radioFound);
+        foundRadioButton.setOnClickListener(this);
+        lostRadioButton = view.findViewById(R.id.radioLost);
+        lostRadioButton.setOnClickListener(this);
+
         searchingView = view.findViewById(R.id.city);
         setAutoComplete();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnaddPhoto:
+                runTakePhotoIntent();
+                break;
+
+            case R.id.btnUploadPhoto:
+                runTakePhotoFromGalleryIntent();
+                break;
+
+            case R.id.btnSubmit:
+                getTexts();
+                PetModel petModel = getPetModel();
+
+                DataProvider.addPet(petModel, photoFileForCamera, collectionName);
+
+                clearData();
+
+                Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
+
+                break;
+
+            case R.id.radioFound:
+                collectionName = DataProvider.FOUND_PET;
+                break;
+
+            case R.id.radioLost:
+                collectionName = DataProvider.LOST_PET;
+                break;
+        }
+    }
+
+    private void clearData() {
+        editTextAddress.setText("");
+        editTextContacts.setText("");
+        editTextDescrition.setText("");
+        searchingView.setText("");
+        imageView.setImageResource(0);
+    }
+
+    @NonNull
+    private PetModel getPetModel() {
+        PetModel petModel = new PetModel();
+        petModel.setCity(cityId);
+        petModel.setAddress(address);
+        petModel.setContacts(contacts);
+        petModel.setDescription(descrition);
+        return petModel;
+    }
+
+    private void getTexts() {
+        cityId = mListener.getChosenCityID(searchingView.getText().toString());
+        address = editTextAddress.getText().toString();
+        contacts = editTextAddress.getText().toString();
+        descrition = editTextAddress.getText().toString();
     }
 
     private void runTakePhotoIntent() {
@@ -152,9 +222,9 @@ public class AddPetFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FROM_CAMERA && resultCode == RESULT_OK) {
-            PetModel petModel = new PetModel();
+            /*PetModel petModel = new PetModel();
             petModel.setCity("Petah Tikva");
-            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);
+            DataProvider.addPet(petModel, photoFileForCamera, DataProvider.FOUND_PET);*/
             onImageReceivedFromCamera();
         }
 
@@ -165,7 +235,6 @@ public class AddPetFragment extends Fragment {
     }
 
     private void onImageReceivedFromCamera() {
-
         // Get the dimensions of the View
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
@@ -186,6 +255,7 @@ public class AddPetFragment extends Fragment {
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
         imageView.setImageBitmap(bitmap);
     }
 

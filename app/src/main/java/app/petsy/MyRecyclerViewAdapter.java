@@ -11,13 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
     private ArrayList<PetModel> petsData = new ArrayList<>();
     private final ListFragment.OnFragmentInteractionListener mListener;
 
@@ -39,7 +40,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         PetModel petModel = petsData.get(position);
         holder.petModel = petModel;
         //holder.mImageView.setImageResource(petModel.getImgId());
-        holder.cityTextView.setText(petModel.getCity());
+        String city = petModel.getCity();
+        String cityName = mListener.getCityById(city);
+        holder.cityTextView.setText(cityName);
         holder.postDate.setText((petModel.getAddress()));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -51,8 +54,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             public void onSuccess(Uri uri) {
                 Glide.with(holder.mImageView.getContext())
                         .load(uri.toString())
-                        .error(R.mipmap.ic_launcher)
+                        .error(R.drawable.photo_not_found)
                         .into(holder.mImageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                holder.mImageView.setImageResource(R.drawable.photo_not_found);
             }
         });
     }
@@ -67,7 +75,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         notifyItemInserted(petsData.size() - 1);
     }
 
-    public void clearCollection() {
+    public void clearCollection(){
         petsData.clear();
         notifyDataSetChanged();
     }
