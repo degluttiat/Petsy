@@ -45,5 +45,5 @@
     <string name="mandatory">מילוי השדה \"עיר\" הינו חובה!</string>
     <string name="addressConst">כתובת:</string>
     <string name="contactsConst">פירטי התקשרות:</string>
-    <string name="descriptionConst">פרטיפ:</string>
+    <string name="descriptionConst">פרטים:</string>
 </resources>
