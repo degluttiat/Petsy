@@ -121,9 +121,13 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private void onBtnSubmitClick() {
         getTexts();
         PetModel petModel = getPetModel();
-        DataProvider.addPet(petModel, imageUri, collectionName);
-        clearData();
-        Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
+        if (searchingView.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), R.string.mandatory, Toast.LENGTH_SHORT).show();
+        } else {
+            DataProvider.addPet(petModel, imageUri, collectionName);
+            clearData();
+            Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void clearData() {
