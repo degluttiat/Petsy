@@ -20,25 +20,24 @@ public class DataProvider {
     public static final String FOUND_PET ="foundPets";
 
 
-    public static void addPet(PetModel petModel, final File file, String collectionName) {
+    public static void addPet(PetModel petModel, final Uri uri, String collectionName) {
         FirebaseFirestore.getInstance().collection(collectionName)
                 .add(petModel)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("zzz", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        if (file != null) {
-                            uploadImage(documentReference.getId(), file);
+                        if (uri != null) {
+                            uploadImage(documentReference.getId(), uri);
                         }
                     }
                 });
     }
 
-    private static void uploadImage(String id, File file) {
+    private static void uploadImage(String id, Uri uri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("photos");
 
-        Uri uri = Uri.fromFile(file);
         StorageReference fileRef = storageRef.child(id);
         UploadTask uploadTask = fileRef.putFile(uri);
 
