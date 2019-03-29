@@ -151,8 +151,8 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private void getTexts() {
         cityId = mListener.getChosenCityID(searchingView.getText().toString());
         address = editTextAddress.getText().toString();
-        contacts = editTextAddress.getText().toString();
-        descrition = editTextAddress.getText().toString();
+        contacts = editTextContacts.getText().toString();
+        descrition = editTextDescrition.getText().toString();
     }
 
     private void runTakePhotoIntent() {
