@@ -33,7 +33,6 @@
     <string name="address">Address</string>
     <string name="contacts">Contact Details</string>
     <string name="description">Description</string>
-    <string name="search_city">Search city</string>
     <string name="post">Post submitted</string>
     <string name="mandatory">City is mandatory to fill!</string>
 
