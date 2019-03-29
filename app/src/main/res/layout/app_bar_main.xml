@@ -40,7 +40,7 @@
                 android:drawablePadding="18dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:hint="@string/search_city"
+                android:hint="@string/search_city2"
                 android:maxLines="1"
                 android:paddingLeft="16dp"
                 android:paddingRight="18dp"
