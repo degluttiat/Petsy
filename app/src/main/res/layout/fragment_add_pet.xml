@@ -142,7 +142,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="3dp"
             android:textSize="16sp"
-            android:text="Add photo "
+            android:text="@string/add_photo"
             app:layout_constraintBottom_toTopOf="@id/imgPreview"
             app:layout_constraintEnd_toStartOf="@+id/btnaddPhoto"
             app:layout_constraintHorizontal_chainStyle="packed"
