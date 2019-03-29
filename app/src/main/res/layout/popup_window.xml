@@ -7,33 +7,59 @@
     android:paddingLeft="20dp"
     android:paddingTop="100dp"
     android:paddingRight="20dp"
-    android:paddingBottom="100dp">
+    android:paddingBottom="100dp"
+    android:radius="10dp">
 
-
-    <ImageView
-        android:id="@+id/petImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+    <FrameLayout
+        android:id="@+id/framLID"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/petImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:padding="6dp"
+            android:background="@drawable/frame"/>
+
+        <ImageView
+            android:src="@drawable/frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/petImage"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--android:background="@drawable/frame"/>-->
     <LinearLayout
         android:id="@+id/linearlayoutPetDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/petImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#99000000"
+        android:layout_alignBottom="@+id/framLID"
+        android:background="@drawable/upper_corners_round_bg"
         android:orientation="horizontal"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
+            android:paddingLeft="10dp"
             android:id="@+id/popupCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
