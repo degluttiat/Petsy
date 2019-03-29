@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity
     public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        Log.d("ZAQ", "ID 2:" + petModel.getImgId());
         final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
         Log.d("ZAQ", "storageRef:" + storageRef.getPath());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -390,7 +389,6 @@ public class MainActivity extends AppCompatActivity
         for (CityModel cityModel : citiesList) {
             if (cityModel.getId().equals(id)) {
                 String lang = Locale.getDefault().getLanguage();
-                Log.d("ZAQ", "Language: " + lang);
                 if (lang.equals("ru")) {
                     return cityModel.ru;
                 } else if (lang.equals("iw")) {

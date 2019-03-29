@@ -46,7 +46,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.postDate.setText((petModel.getAddress()));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        Log.d("ZAQ", "ID 2:" + petModel.getImgId());
         final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
         Log.d("ZAQ", "storageRef:" + storageRef.getPath());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
