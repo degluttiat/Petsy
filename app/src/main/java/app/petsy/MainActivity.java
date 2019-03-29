@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     private AutoCompleteTextView searchingView;
     private ImageView petImage;
     private TextView petCityPopUp;
+    private TextView addressPopup;
+    private TextView descriptionPopup;
+    private TextView contactsPopup;
 
 
     @Override
@@ -113,6 +116,12 @@ public class MainActivity extends AppCompatActivity
         petImage = popupView.findViewById(R.id.petImage);
         petCityPopUp = popupView.findViewById(R.id.popupCity);
         petCityPopUp.setText(getCityById(petModel.getCity()));
+        addressPopup = popupView.findViewById(R.id.addressPopup);
+        descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
+        contactsPopup = popupView.findViewById(R.id.contactsPopup);
+        addressPopup.setText(petModel.getAddress());
+        descriptionPopup.setText(petModel.getDescription());
+        contactsPopup.setText(petModel.getContacts());
 
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;

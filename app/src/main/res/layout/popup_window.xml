@@ -1,52 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="20dp"
-    android:paddingTop="100dp"
+    android:paddingTop="50dp"
     android:paddingRight="20dp"
-    android:paddingBottom="100dp"
+    android:paddingBottom="50dp"
     android:radius="10dp">
 
     <FrameLayout
         android:id="@+id/framLID"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/petImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:padding="6dp"
-            android:background="@drawable/frame"/>
+            android:background="@drawable/frame"
+            android:padding="4dp"
+            android:scaleType="centerCrop" />
 
         <ImageView
-            android:src="@drawable/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@drawable/frame" />
 
     </FrameLayout>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/petImage"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--android:background="@drawable/frame"/>-->
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/linearlayoutPetDetails"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/framLID"
         android:background="@drawable/upper_corners_round_bg"
@@ -55,18 +44,59 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp">
 
         <TextView
-            android:paddingLeft="10dp"
             android:id="@+id/popupCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:text="@string/lorem_ipsum"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_corners_round_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/framLID"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="12dp"
+        >
+
+        <TextView
+            android:id="@+id/addressPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_123456789"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/descriptionPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_123456789"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/contactsPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_123456789"
+            android:textSize="14sp" />
+
 
     </LinearLayout>
 

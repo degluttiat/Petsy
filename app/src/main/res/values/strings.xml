@@ -35,5 +35,6 @@
     <string name="description">Description</string>
     <string name="post">Post submitted</string>
     <string name="mandatory">City is mandatory to fill!</string>
+    <string name="search_city">City</string>
 
 </resources>
