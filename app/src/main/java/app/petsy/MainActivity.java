@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     private ImageButton clearButton;
     private AutoCompleteTextView searchingView;
     private ImageView petImage;
+    private TextView petCityPopUp;
 
 
     @Override
@@ -101,12 +104,15 @@ public class MainActivity extends AppCompatActivity
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_window, null);
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
         petImage = popupView.findViewById(R.id.petImage);
+        petCityPopUp = popupView.findViewById(R.id.popupCity);
+        petCityPopUp.setText(petModel.getCity());
 
         // create the popup window
-        int width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-        int height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        int height = ConstraintLayout.LayoutParams.MATCH_PARENT;
 
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
@@ -319,7 +325,6 @@ public class MainActivity extends AppCompatActivity
                 listFragment0.getData(null);
                 listFragment1.getData(null);
 
-                System.out.println("clicked");
                 break;
         }
     }
