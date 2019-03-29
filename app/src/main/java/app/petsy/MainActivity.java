@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         getData();
 
     }
+
     public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -119,9 +120,9 @@ public class MainActivity extends AppCompatActivity
         addressPopup = popupView.findViewById(R.id.addressPopup);
         descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
         contactsPopup = popupView.findViewById(R.id.contactsPopup);
-        addressPopup.setText(petModel.getAddress());
-        descriptionPopup.setText(petModel.getDescription());
-        contactsPopup.setText(petModel.getContacts());
+        addressPopup.setText(getString(R.string.addressConst) + " " + petModel.getAddress());
+        descriptionPopup.setText(getString(R.string.descriptionConst) + " " + petModel.getDescription());
+        contactsPopup.setText(getString(R.string.contactsConst) + " " + petModel.getContacts());
 
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
