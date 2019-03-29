@@ -41,5 +41,6 @@
     <string name="address">כתובת</string>
     <string name="contacts">פרטי התקשרות</string>
     <string name="description">תיאור</string>
-    <string name="search_city">חיפוש עיר</string>
+    <string name="post">מודעתך התקבלה</string>
+    <string name="mandatory">מילוי השדה \"עיר\" הינו חובה!</string>
 </resources>
