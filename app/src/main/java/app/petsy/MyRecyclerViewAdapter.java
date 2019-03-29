@@ -20,8 +20,7 @@ import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
     private ArrayList<PetModel> petsData = new ArrayList<>();
-    ListFragment.OnFragmentInteractionListener mListener;
-
+    private final ListFragment.OnFragmentInteractionListener mListener;
 
     public MyRecyclerViewAdapter(ListFragment.OnFragmentInteractionListener mListener) {
         this.mListener = mListener;
@@ -32,12 +31,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.recyclerview_item, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view, mListener);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         PetModel petModel = petsData.get(position);
+        holder.petModel = petModel;
         //holder.mImageView.setImageResource(petModel.getImgId());
         String city = petModel.getCity();
         String cityName = mListener.getCityById(city);
@@ -79,17 +80,28 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView;
         private TextView cityTextView;
         private TextView contactsTextView;
         private TextView postDate;
+        private PetModel petModel;
+        private ListFragment.OnFragmentInteractionListener mListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, ListFragment.OnFragmentInteractionListener mListener) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mImageView = itemView.findViewById(R.id.pet_picture);
             cityTextView = itemView.findViewById(R.id.city);
             postDate = itemView.findViewById(R.id.textViewPostDate);
+            this.mListener = mListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
+                mListener.onItemClicked(petModel);
+            }
 
         }
     }

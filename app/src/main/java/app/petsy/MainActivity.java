@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -13,20 +14,34 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +63,15 @@ public class MainActivity extends AppCompatActivity
     private View addButtonLine;
     private ImageButton clearButton;
     private AutoCompleteTextView searchingView;
+    private ImageView petImage;
+    private TextView petCityPopUp;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         searchingView = findViewById(R.id.autoCompleteTextView);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,6 +87,52 @@ public class MainActivity extends AppCompatActivity
 
         getData();
 
+    }
+    public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        Log.d("ZAQ", "ID 2:" + petModel.getImgId());
+        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
+        Log.d("ZAQ", "storageRef:" + storageRef.getPath());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MainActivity.this)
+                        .load(uri.toString())
+                        .placeholder(R.drawable.photo_not_found)
+                        .error(R.mipmap.ic_launcher)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(petImage);
+            }
+        });
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
+        petImage = popupView.findViewById(R.id.petImage);
+        petCityPopUp = popupView.findViewById(R.id.popupCity);
+        petCityPopUp.setText(getCityById(petModel.getCity()));
+
+        // create the popup window
+        int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        int height = ConstraintLayout.LayoutParams.MATCH_PARENT;
+
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
 
@@ -266,7 +330,6 @@ public class MainActivity extends AppCompatActivity
                 listFragment0.getData(null);
                 listFragment1.getData(null);
 
-                System.out.println("clicked");
                 break;
         }
     }
@@ -329,5 +392,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return "Unknown";
+    }
+
+    @Override
+    public void onItemClicked(PetModel petModel) {
+        onButtonShowPopupWindowClick(foundButtonLine, petModel);
+
     }
 }

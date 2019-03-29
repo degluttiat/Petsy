@@ -123,6 +123,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
      */
     public interface OnFragmentInteractionListener {
         String getCityById(String id);
+        void onItemClicked(PetModel petModel);
     }
 
 
