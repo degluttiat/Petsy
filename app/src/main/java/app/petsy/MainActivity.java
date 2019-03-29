@@ -32,6 +32,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity
             public void onSuccess(Uri uri) {
                 Glide.with(MainActivity.this)
                         .load(uri.toString())
+                        .placeholder(R.drawable.photo_not_found)
                         .error(R.mipmap.ic_launcher)
+                        .transition(DrawableTransitionOptions.withCrossFade())
                         .into(petImage);
             }
         });
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
         petImage = popupView.findViewById(R.id.petImage);
         petCityPopUp = popupView.findViewById(R.id.popupCity);
-        petCityPopUp.setText(petModel.getCity());
+        petCityPopUp.setText(getCityById(petModel.getCity()));
 
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
