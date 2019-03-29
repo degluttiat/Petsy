@@ -36,5 +36,8 @@
     <string name="post">Post submitted</string>
     <string name="mandatory">City is mandatory to fill!</string>
     <string name="search_city">City</string>
+    <string name="addressConst">Address: </string>
+    <string name="contactsConst">Contacts: </string>
+    <string name="descriptionConst">Description: </string>
 
 </resources>

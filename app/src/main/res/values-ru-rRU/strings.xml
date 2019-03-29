@@ -35,4 +35,7 @@
     <string name="city">Город</string>
     <string name="post">Ваш пост опубликован</string>
     <string name="mandatory">Обязательно заполните поле \"город\"!</string>
+    <string name="addressConst">Адрес:</string>
+    <string name="contactsConst">Контакты:</string>
+    <string name="descriptionConst">Описание:</string>
 </resources>
