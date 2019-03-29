@@ -362,11 +362,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
     public List<CityModel> getCitiesList() {
         return citiesList;
     }

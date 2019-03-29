@@ -40,7 +40,6 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     static final int REQUEST_CODE_FROM_CAMERA = 2;
     private int REQUEST_CODE_FROM_GALLERY = 1;
     private String currentPhotoPath;
-    private File photoFileForCamera;
     private ImageView imageView;
     private AutoCompleteTextView searchingView;
     private String collectionName = DataProvider.FOUND_PET;
@@ -53,6 +52,8 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private String address;
     private String contacts;
     private String descrition;
+    private Uri imageUri;
+    private File photoFileForCamera;
 
 
     public AddPetFragment() {
@@ -104,15 +105,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnSubmit:
-                getTexts();
-                PetModel petModel = getPetModel();
-
-                DataProvider.addPet(petModel, photoFileForCamera, collectionName);
-
-                clearData();
-
-                Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
-
+                onBtnSubmitClick();
                 break;
 
             case R.id.radioFound:
@@ -123,6 +116,14 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                 collectionName = DataProvider.LOST_PET;
                 break;
         }
+    }
+
+    private void onBtnSubmitClick() {
+        getTexts();
+        PetModel petModel = getPetModel();
+        DataProvider.addPet(petModel, imageUri, collectionName);
+        clearData();
+        Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
     }
 
     private void clearData() {
@@ -162,8 +163,8 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
             }
             // Continue only if the File was successfully created
             if (photoFileForCamera != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(), "app.petsy", photoFileForCamera);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                imageUri = FileProvider.getUriForFile(getContext(), "app.petsy", photoFileForCamera);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(takePictureIntent, REQUEST_CODE_FROM_CAMERA);
             }
         }
@@ -207,13 +208,13 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         searchingView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         searchingView.setBackgroundColor(Color.WHITE);
 
-        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = adapter.getItem(position);
                 String chosenCityID = mListener.getChosenCityID(item);
             }
-        });
+        });*/
 
 
     }
@@ -260,10 +261,10 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onImageReceivedFromGallery(Intent data) {
-        Uri uri = data.getData();
+       imageUri = data.getData();
 
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
             imageView.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -289,8 +290,6 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
 
         List<CityModel> getCitiesList();
 
