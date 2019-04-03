@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, "Petsy");
-            String message = getString(R.string.let_me_recommend_you) + "\n\n*Your app link* ";
+            String message = getString(R.string.let_me_recommend_you) + "\n\nhttps://play.google.com/store/apps/details?id=app.petsy";
 
             i.putExtra(Intent.EXTRA_TEXT, message);
             startActivity(Intent.createChooser(i, getString(R.string.choose_one)));
