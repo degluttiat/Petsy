@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,7 +27,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -58,10 +56,10 @@ public class MainActivity extends AppCompatActivity
     private MyViewPagerAdapter adapterViewPager;
     private Button found;
     private Button lost;
-    private Button add;
+    private Button homeless;
     private View foundButtonLine;
     private View lostButtonLine;
-    private View addButtonLine;
+    private View homelessButtonLine;
     private ImageButton clearButton;
     private AutoCompleteTextView searchingView;
     private ImageView petImage;
@@ -164,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                         lostButtonSelectedBehavior();
                         break;
                     case 2:
-                        addButtonSelectedBehavior();
+                        homelessButtonSelectedBehavior();
                         break;
 
                 }
@@ -187,9 +185,9 @@ public class MainActivity extends AppCompatActivity
         lost = findViewById(R.id.btnLost);
         lost.setOnClickListener(this);
         lostButtonLine = findViewById(R.id.lostBtnLine);
-        add = findViewById(R.id.btnAdd);
-        add.setOnClickListener(this);
-        addButtonLine = findViewById(R.id.addBtnLine);
+        homeless = findViewById(R.id.btnHomeless);
+        homeless.setOnClickListener(this);
+        homelessButtonLine = findViewById(R.id.homelessBtnLine);
         clearButton = findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
     }
@@ -267,7 +265,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_lost) {
             vpPager.setCurrentItem(1);
         } else if (id == R.id.nav_add) {
-            vpPager.setCurrentItem(2);
+            vpPager.setCurrentItem(3);
         } else if (id == R.id.nav_about) {
             Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(myIntent);
@@ -332,12 +330,12 @@ public class MainActivity extends AppCompatActivity
                 vpPager.setCurrentItem(1);
                 lostButtonSelectedBehavior();
                 break;
-            case R.id.btnAdd:
+            case R.id.btnHomeless:
                 vpPager.setCurrentItem(2);
-                addButtonSelectedBehavior();
+                homelessButtonSelectedBehavior();
                 break;
             case R.id.fab:
-                vpPager.setCurrentItem(2);
+                vpPager.setCurrentItem(3);
             case R.id.clearButton:
                 searchingView.setText("");
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
@@ -349,9 +347,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void addButtonSelectedBehavior() {
-        add.setTextColor(Color.WHITE);
-        addButtonLine.setVisibility(View.VISIBLE);
+    private void homelessButtonSelectedBehavior() {
+        homeless.setTextColor(Color.WHITE);
+        homelessButtonLine.setVisibility(View.VISIBLE);
         lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
         lostButtonLine.setVisibility(View.INVISIBLE);
         found.setTextColor(Color.parseColor(DEDEDE_COLOR));
@@ -363,8 +361,8 @@ public class MainActivity extends AppCompatActivity
         lostButtonLine.setVisibility(View.VISIBLE);
         found.setTextColor(Color.parseColor(DEDEDE_COLOR));
         foundButtonLine.setVisibility(View.INVISIBLE);
-        add.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        addButtonLine.setVisibility(View.INVISIBLE);
+        homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        homelessButtonLine.setVisibility(View.INVISIBLE);
     }
 
     private void foundButtonSelectedBehavior() {
@@ -372,8 +370,8 @@ public class MainActivity extends AppCompatActivity
         foundButtonLine.setVisibility(View.VISIBLE);
         lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
         lostButtonLine.setVisibility(View.INVISIBLE);
-        add.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        addButtonLine.setVisibility(View.INVISIBLE);
+        homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        homelessButtonLine.setVisibility(View.INVISIBLE);
     }
 
     @Override

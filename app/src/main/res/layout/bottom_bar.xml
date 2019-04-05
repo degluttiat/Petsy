@@ -33,12 +33,12 @@
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="#FFD8E706"
-        app:layout_constraintEnd_toStartOf="@id/addBtnLine"
+        app:layout_constraintEnd_toStartOf="@id/homelessBtnLine"
         app:layout_constraintStart_toEndOf="@id/foundBtnLine"
         app:layout_constraintTop_toTopOf="@id/viewId" />
 
     <View
-        android:id="@+id/addBtnLine"
+        android:id="@+id/homelessBtnLine"
         android:visibility="invisible"
         android:layout_width="0dp"
         android:layout_height="4dp"
@@ -72,16 +72,16 @@
         android:textColor="#DEDEDE"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/viewId"
-        app:layout_constraintEnd_toStartOf="@id/btnAdd"
+        app:layout_constraintEnd_toStartOf="@id/btnHomeless"
         app:layout_constraintStart_toEndOf="@id/btnFound"
         app:layout_constraintTop_toTopOf="@id/viewId" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnHomeless"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"
+        android:text="@string/homeless"
         android:textColor="#DEDEDE"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/viewId"

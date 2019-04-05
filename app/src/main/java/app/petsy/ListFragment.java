@@ -25,6 +25,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
 
     private static int TYPE_FOUND = 0;
     private static int TYPE_LOST = 1;
+    private static int TYPE_HOMELESS = 2;
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
@@ -71,6 +72,8 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
             collectionName = "foundPets";
         } else if (type == TYPE_LOST) {
             collectionName = "lostPets";
+        } else if (type == TYPE_HOMELESS) {
+            collectionName = "homeless";
         }
 
         collectionRef = FirebaseFirestore.getInstance().collection(collectionName);

@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class MyViewPagerAdapter extends FragmentPagerAdapter {
-    private static int NUM_ITEMS = 3;
+    private static int NUM_ITEMS = 4;
 
     public MyViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -20,7 +20,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
     // Returns the fragment to display for that page
     @Override
     public Fragment getItem(int position) {
-        if (position == 2) {
+        if (position == 3) {
             return AddPetFragment.newInstance();
         } else {
             return ListFragment.newInstance(position);
