@@ -45,6 +45,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private String collectionName = DataProvider.FOUND_PET;
     private RadioButton foundRadioButton;
     private RadioButton lostRadioButton;
+    private RadioButton homelessRadioButton;
     private EditText editTextAddress;
     private EditText editTextContacts;
     private EditText editTextDescrition;
@@ -87,6 +88,9 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         foundRadioButton.setOnClickListener(this);
         lostRadioButton = view.findViewById(R.id.radioLost);
         lostRadioButton.setOnClickListener(this);
+        homelessRadioButton = view.findViewById(R.id.radioHomeless);
+        homelessRadioButton.setOnClickListener(this);
+
 
         searchingView = view.findViewById(R.id.city);
         setAutoComplete();
@@ -114,6 +118,10 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
             case R.id.radioLost:
                 collectionName = DataProvider.LOST_PET;
+                break;
+
+            case R.id.radioHomeless:
+                collectionName = DataProvider.HOMELESS;
                 break;
         }
     }

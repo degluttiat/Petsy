@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_lost_black_24dp"
             android:title="@string/drawer_lost" />
         <item
+            android:id="@+id/nav_homeless"
+            android:icon="@drawable/ic_remove_circle_outline_black_24dp"
+            android:title="@string/drawer_homeless" />
+        <item
             android:id="@+id/nav_add"
             android:icon="@drawable/ic_add_black_24dp"
             android:title="@string/drawer_add" />

@@ -47,4 +47,6 @@
     <string name="addressConst">כתובת:</string>
     <string name="contactsConst">פירטי התקשרות:</string>
     <string name="descriptionConst">פרטים:</string>
+    <string name="drawer_homeless">הומלס</string>
+    <string name="looking_for_a_home">מחפסים בית</string>
 </resources>

@@ -41,6 +41,8 @@
     <string name="addressConst">Address: </string>
     <string name="contactsConst">Contacts: </string>
     <string name="descriptionConst">Description: </string>
+    <string name="drawer_homeless">Homeless</string>
+    <string name="looking_for_a_home">Looking for a home</string>
 
 
 </resources>

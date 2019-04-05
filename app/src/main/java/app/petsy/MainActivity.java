@@ -1,11 +1,14 @@
 package app.petsy;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     private TextView descriptionPopup;
     private TextView contactsPopup;
     private FloatingActionButton fab;
+    private AppBarLayout appBarLayout;
 
 
     @Override
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        appBarLayout = findViewById(R.id.appBar);
 
         searchingView = findViewById(R.id.autoCompleteTextView);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -163,6 +168,9 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 2:
                         homelessButtonSelectedBehavior();
+                        break;
+                    case 3:
+                        fabButtonSelectedBehavior();
                         break;
 
                 }
@@ -264,6 +272,8 @@ public class MainActivity extends AppCompatActivity
             vpPager.setCurrentItem(0);
         } else if (id == R.id.nav_lost) {
             vpPager.setCurrentItem(1);
+        } else if (id == R.id.nav_homeless) {
+            vpPager.setCurrentItem(2);
         } else if (id == R.id.nav_add) {
             vpPager.setCurrentItem(3);
         } else if (id == R.id.nav_about) {
@@ -336,6 +346,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.fab:
                 vpPager.setCurrentItem(3);
+                fabButtonSelectedBehavior();
             case R.id.clearButton:
                 searchingView.setText("");
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
@@ -347,6 +358,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    private void fabButtonSelectedBehavior() {
+        lostButtonLine.setVisibility(View.INVISIBLE);
+        foundButtonLine.setVisibility(View.INVISIBLE);
+        homelessButtonLine.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.INVISIBLE);
+        appBarLayout.setExpanded(false, true);
+}
+
+    @SuppressLint("RestrictedApi")
     private void homelessButtonSelectedBehavior() {
         homeless.setTextColor(Color.WHITE);
         homelessButtonLine.setVisibility(View.VISIBLE);
@@ -354,8 +375,12 @@ public class MainActivity extends AppCompatActivity
         lostButtonLine.setVisibility(View.INVISIBLE);
         found.setTextColor(Color.parseColor(DEDEDE_COLOR));
         foundButtonLine.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
+        appBarLayout.setVisibility(View.VISIBLE);
+        appBarLayout.setExpanded(true, true);
     }
 
+    @SuppressLint("RestrictedApi")
     private void lostButtonSelectedBehavior() {
         lost.setTextColor(Color.WHITE);
         lostButtonLine.setVisibility(View.VISIBLE);
@@ -363,8 +388,12 @@ public class MainActivity extends AppCompatActivity
         foundButtonLine.setVisibility(View.INVISIBLE);
         homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
         homelessButtonLine.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
+        appBarLayout.setVisibility(View.VISIBLE);
+        appBarLayout.setExpanded(true, true);
     }
 
+    @SuppressLint("RestrictedApi")
     private void foundButtonSelectedBehavior() {
         found.setTextColor(Color.WHITE);
         foundButtonLine.setVisibility(View.VISIBLE);
@@ -372,6 +401,9 @@ public class MainActivity extends AppCompatActivity
         lostButtonLine.setVisibility(View.INVISIBLE);
         homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
         homelessButtonLine.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
+        appBarLayout.setVisibility(View.VISIBLE);
+        appBarLayout.setExpanded(true, true);
     }
 
     @Override

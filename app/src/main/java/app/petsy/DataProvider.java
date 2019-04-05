@@ -18,6 +18,7 @@ public class DataProvider {
 
     public static final String LOST_PET ="lostPets";
     public static final String FOUND_PET ="foundPets";
+    public static final String HOMELESS = "homeless";
 
 
     public static void addPet(PetModel petModel, final Uri uri, String collectionName) {
