@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity
     private TextView addressPopup;
     private TextView descriptionPopup;
     private TextView contactsPopup;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -179,6 +181,8 @@ public class MainActivity extends AppCompatActivity
     private void setButtons() {
         found = findViewById(R.id.btnFound);
         found.setOnClickListener(this);
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(this);
         foundButtonLine = findViewById(R.id.foundBtnLine);
         lost = findViewById(R.id.btnLost);
         lost.setOnClickListener(this);
@@ -332,6 +336,8 @@ public class MainActivity extends AppCompatActivity
                 vpPager.setCurrentItem(2);
                 addButtonSelectedBehavior();
                 break;
+            case R.id.fab:
+                vpPager.setCurrentItem(2);
             case R.id.clearButton:
                 searchingView.setText("");
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
