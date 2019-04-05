@@ -279,6 +279,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(myIntent);
+        } else if (id == R.id.nav_pp) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cdn.rawgit.com/degluttiat/Petsy/master/privacy_policy.html"));
+            startActivity(browserIntent);
         } else if (id == R.id.nav_share) {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
@@ -365,7 +368,7 @@ public class MainActivity extends AppCompatActivity
         homelessButtonLine.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.INVISIBLE);
         appBarLayout.setExpanded(false, true);
-}
+    }
 
     @SuppressLint("RestrictedApi")
     private void homelessButtonSelectedBehavior() {

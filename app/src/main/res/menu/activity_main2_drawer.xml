@@ -32,6 +32,11 @@
                 android:title="@string/about" />
 
             <item
+                android:id="@+id/nav_pp"
+                android:icon="@drawable/ic_info_pp_black_24dp"
+                android:title="@string/privacy_policy" />
+
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/share" />
