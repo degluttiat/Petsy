@@ -1,5 +1,8 @@
 package app.petsy;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -18,12 +23,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     private ArrayList<PetModel> petsData = new ArrayList<>();
     private final ListFragment.OnFragmentInteractionListener mListener;
+    private StorageReference photosRef;
 
     public MyRecyclerViewAdapter(ListFragment.OnFragmentInteractionListener mListener) {
         this.mListener = mListener;
+        photosRef = FirebaseStorage.getInstance().getReference().child("photos");
     }
 
     @NonNull
@@ -45,23 +52,45 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.cityTextView.setText(cityName);
         holder.postDate.setText((petModel.getAddress()));
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
+        Context context = holder.mImageView.getContext();
+        if (!isOnline(context)) {
+            holder.mImageView.setImageResource(R.drawable.photo_not_found);
+            return;
+        }
+
+        if (petModel.getCachedImageUrl() == null) {
+            getImageUrlFromFireStoreAndDownload(holder, petModel);
+        } else {
+            loadImageWithGlide(petModel.getCachedImageUrl(), holder);
+        }
+    }
+
+    public boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void getImageUrlFromFireStoreAndDownload(@NonNull final ViewHolder holder, final PetModel petModel) {
+        final StorageReference storageRef = photosRef.child(petModel.getImgId());
         Log.d("ZAQ", "storageRef:" + storageRef.getPath());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(holder.mImageView.getContext())
-                        .load(uri.toString())
-                        .error(R.drawable.photo_not_found)
-                        .into(holder.mImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                holder.mImageView.setImageResource(R.drawable.photo_not_found);
+                loadImageWithGlide(uri.toString(), holder);
+                petModel.setCachedImageUrl(uri.toString());
             }
         });
+    }
+
+    private void loadImageWithGlide(String uri, @NonNull ViewHolder holder) {
+        Log.d("Glide", "Image URL: " + uri.toString());
+        Glide.with(holder.mImageView.getContext())
+                .load(uri)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.photo_not_found)
+                .into(holder.mImageView);
     }
 
     @Override
@@ -74,7 +103,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         notifyItemInserted(petsData.size() - 1);
     }
 
-    public void clearCollection(){
+    public void clearCollection() {
         petsData.clear();
         notifyDataSetChanged();
     }

@@ -41,6 +41,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setViewPager() {
         vpPager = findViewById(R.id.vpPager);
+        vpPager.setOffscreenPageLimit(3);
         adapterViewPager = new MyViewPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
         vpPager.setPageTransformer(true, new ZoomOutPageTransformer());

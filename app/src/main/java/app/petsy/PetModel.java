@@ -12,6 +12,7 @@ public class PetModel {
     private String imgId;
     private String contacts;
     private String date;
+    private String cachedImageUrl;
 
     public PetModel() {
     }
@@ -65,5 +66,13 @@ public class PetModel {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getCachedImageUrl() {
+        return cachedImageUrl;
+    }
+
+    public void setCachedImageUrl(String cachedImageUrl) {
+        this.cachedImageUrl = cachedImageUrl;
     }
 }
