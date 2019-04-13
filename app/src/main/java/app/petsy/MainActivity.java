@@ -306,6 +306,9 @@ public class MainActivity extends AppCompatActivity
         lineLost.setVisibility(View.INVISIBLE);
         lineFound.setVisibility(View.INVISIBLE);
         lineHomeless.setVisibility(View.INVISIBLE);
+        btnLost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        btnFound.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        btnHomeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
         fab.setVisibility(View.INVISIBLE);
         appBarLayout.setExpanded(false, true);
     }
