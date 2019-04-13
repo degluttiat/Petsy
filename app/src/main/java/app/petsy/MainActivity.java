@@ -17,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -51,6 +51,7 @@ import java.util.Locale;
 
 import app.petsy.model.CityModel;
 import app.petsy.model.PetModel;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         appBarLayout = findViewById(R.id.appBar);
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity
 
         getData();
 
+        //throw new IllegalStateException("Test");
     }
 
     private void changeFragmentListenerAndBtnBehavior() {
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String cityName = adapter.getItem(position);
                 String cityId = getChosenCityID(cityName);
-                if (cityId == null){
+                if (cityId == null) {
                     return;
                 }
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 0);
