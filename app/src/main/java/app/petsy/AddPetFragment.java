@@ -209,7 +209,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
     void setAutoComplete() {
         final List<String> cities = new ArrayList<>();
-        final List<CityModel> citiesList = mListener.getCitiesList();
+        final List<CityModel> citiesList = mListener.getCityModelList();
         for (CityModel city : citiesList) {
             cities.add(city.getHe());
             cities.add(city.getRu());
@@ -305,7 +305,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
     public interface OnFragmentInteractionListener {
 
-        List<CityModel> getCitiesList();
+        List<CityModel> getCityModelList();
 
         String getChosenCityID(String cityName);
     }

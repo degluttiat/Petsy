@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AddPetFragment.OnFragmentInteractionListener {
 
     public static final String DEDEDE_COLOR = "#DEDEDE";
-    private final List<CityModel> citiesList = new ArrayList<>();
+    private final List<CityModel> cityModelList = new ArrayList<>();
     private ViewPager viewPager;
     private MyViewPagerAdapter adapterViewPager;
     private Button btnFound;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity
     private View lineLost;
     private View lineHomeless;
     private AutoCompleteTextView searchingView;
-    private ImageView petImage;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setSearchingView() {
         final List<String> cities = new ArrayList<>();
-        for (CityModel city : citiesList) {
+        for (CityModel city : cityModelList) {
             cities.add(city.getHe());
             cities.add(city.getRu());
             cities.add(city.getEn());
@@ -169,13 +169,10 @@ public class MainActivity extends AppCompatActivity
         searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = adapter.getItem(position);
-                String cityId = null;
-                for (CityModel cityModel : citiesList) {
-                    if (cityModel.getRu().equals(item) || cityModel.getHe().equals(item) || cityModel.getEn().equals(item)) {
-                        cityId = cityModel.getId();
-                        break;
-                    }
+                String cityName = adapter.getItem(position);
+                String cityId = getChosenCityID(cityName);
+                if (cityId == null){
+                    return;
                 }
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 0);
                 ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 1);
@@ -210,12 +207,10 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_found) {
-            // Handle the camera action
             viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_lost) {
             viewPager.setCurrentItem(1);
@@ -259,7 +254,7 @@ public class MainActivity extends AppCompatActivity
                         case ADDED:
                             CityModel cm = dc.getDocument().toObject(CityModel.class);
                             cm.setId(dc.getDocument().getId());
-                            citiesList.add(cm);
+                            cityModelList.add(cm);
                             break;
                         case MODIFIED:
                             break;
@@ -295,9 +290,10 @@ public class MainActivity extends AppCompatActivity
                 searchingView.setText("");
                 ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 0);
                 ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 1);
+                ListFragment listFragment2 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 2);
                 listFragment0.getData(null);
                 listFragment1.getData(null);
-
+                listFragment2.getData(null);
                 break;
         }
     }
@@ -351,13 +347,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public List<CityModel> getCitiesList() {
-        return citiesList;
+    public List<CityModel> getCityModelList() {
+        return cityModelList;
     }
 
     @Override
     public String getChosenCityID(String cityName) {
-        for (CityModel cityModel : citiesList) {
+        for (CityModel cityModel : cityModelList) {
             if (cityModel.getRu().equals(cityName) || cityModel.getHe().equals(cityName) || cityModel.getEn().equals(cityName)) {
                 return cityModel.getId();
             }
@@ -367,15 +363,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public String getCityById(String id) {
-        for (CityModel cityModel : citiesList) {
+        for (CityModel cityModel : cityModelList) {
             if (cityModel.getId().equals(id)) {
                 String lang = Locale.getDefault().getLanguage();
-                if (lang.equals("ru")) {
-                    return cityModel.getRu();
-                } else if (lang.equals("iw")) {
-                    return cityModel.getHe();
-                } else {
-                    return cityModel.getEn();
+                switch (lang) {
+                    case "ru":
+                        return cityModel.getRu();
+                    case "iw":
+                        return cityModel.getHe();
+                    default:
+                        return cityModel.getEn();
                 }
             }
         }
@@ -384,41 +381,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClicked(PetModel petModel) {
-        onButtonShowPopupWindowClick(lineFound, petModel);
-
+        onButtonShowPopupWindowClick(petModel);
     }
 
-    public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
-        Log.d("ZAQ", "storageRef:" + storageRef.getPath());
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(MainActivity.this)
-                        .load(uri.toString())
-                        .placeholder(R.drawable.photo_not_found)
-                        .error(R.mipmap.ic_launcher)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(petImage);
-            }
-        });
-
+    public void onButtonShowPopupWindowClick(PetModel petModel) {
         // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        if (inflater == null) {
+            return;
+        }
         View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
-        petImage = popupView.findViewById(R.id.petImage);
+        ImageView petImage = popupView.findViewById(R.id.petImage);
+
+        loadImage(petModel, petImage);
+
         TextView petCityPopUp = popupView.findViewById(R.id.popupCity);
         petCityPopUp.setText(getCityById(petModel.getCity()));
         TextView addressPopup = popupView.findViewById(R.id.addressPopup);
         TextView descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
         TextView contactsPopup = popupView.findViewById(R.id.contactsPopup);
-        addressPopup.setText(getString(R.string.addressConst) + " " + petModel.getAddress());
-        descriptionPopup.setText(getString(R.string.descriptionConst) + " " + petModel.getDescription());
-        contactsPopup.setText(getString(R.string.contactsConst) + " " + petModel.getContacts());
+        addressPopup.setText(String.format("%s %s", getString(R.string.addressConst), petModel.getAddress()));
+        descriptionPopup.setText(String.format("%s %s", getString(R.string.descriptionConst), petModel.getDescription()));
+        contactsPopup.setText(String.format("%s %s", getString(R.string.contactsConst), petModel.getContacts()));
 
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
@@ -428,7 +413,7 @@ public class MainActivity extends AppCompatActivity
 
         // show the popup window
         // which view you pass in doesn't matter, it is only used for the window tolken
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
 
         // dismiss the popup window when touched
         popupView.setOnTouchListener(new View.OnTouchListener() {
@@ -436,6 +421,23 @@ public class MainActivity extends AppCompatActivity
             public boolean onTouch(View v, MotionEvent event) {
                 popupWindow.dismiss();
                 return true;
+            }
+        });
+    }
+
+    private void loadImage(PetModel petModel, final ImageView petImage) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference photos = storage.getReference().child("photos");
+        final StorageReference photoRef = photos.child(petModel.getImgId());
+        photoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MainActivity.this)
+                        .load(uri.toString())
+                        .placeholder(R.drawable.photo_not_found)
+                        .error(R.mipmap.ic_launcher)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(petImage);
             }
         });
     }
