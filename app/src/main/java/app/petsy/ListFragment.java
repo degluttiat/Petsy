@@ -17,6 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import app.petsy.model.PetModel;
+
 
 public class ListFragment extends Fragment implements EventListener<QuerySnapshot> {
     private static final String ARG_TYPE = "ARG_TYPE";

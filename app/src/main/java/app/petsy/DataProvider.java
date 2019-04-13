@@ -12,7 +12,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
+import app.petsy.model.PetModel;
 
 public class DataProvider {
 

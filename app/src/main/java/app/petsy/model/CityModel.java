@@ -1,10 +1,13 @@
-package app.petsy;
+package app.petsy.model;
 
+import android.support.annotation.Keep;
+
+@Keep
 public class CityModel {
-    String en;
-    String he;
-    String ru;
-    String id;
+    private String en;
+    private String he;
+    private String ru;
+    private String id;
 
     public String getId() {
         return id;

@@ -1,10 +1,13 @@
-package app.petsy;
+package app.petsy.model;
+
+import android.support.annotation.Keep;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+@Keep
 public class PetModel {
     private String city;
     private String address;

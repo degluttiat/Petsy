@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,7 +40,6 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -50,30 +48,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import app.petsy.model.CityModel;
+import app.petsy.model.PetModel;
+
 public class MainActivity extends AppCompatActivity
         implements ListFragment.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AddPetFragment.OnFragmentInteractionListener {
 
     public static final String DEDEDE_COLOR = "#DEDEDE";
-    private final List<CityModel> citiesList = new ArrayList();
-    private ViewPager vpPager;
+    private final List<CityModel> citiesList = new ArrayList<>();
+    private ViewPager viewPager;
     private MyViewPagerAdapter adapterViewPager;
-    private Button found;
-    private Button lost;
-    private Button homeless;
-    private View foundButtonLine;
-    private View lostButtonLine;
-    private View homelessButtonLine;
-    private ImageButton clearButton;
+    private Button btnFound;
+    private Button btnLost;
+    private Button btnHomeless;
+    private View lineFound;
+    private View lineLost;
+    private View lineHomeless;
     private AutoCompleteTextView searchingView;
     private ImageView petImage;
-    private TextView petCityPopUp;
-    private TextView addressPopup;
-    private TextView descriptionPopup;
-    private TextView contactsPopup;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,61 +93,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
-        Log.d("ZAQ", "storageRef:" + storageRef.getPath());
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(MainActivity.this)
-                        .load(uri.toString())
-                        .placeholder(R.drawable.photo_not_found)
-                        .error(R.mipmap.ic_launcher)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(petImage);
-            }
-        });
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
-        View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
-        petImage = popupView.findViewById(R.id.petImage);
-        petCityPopUp = popupView.findViewById(R.id.popupCity);
-        petCityPopUp.setText(getCityById(petModel.getCity()));
-        addressPopup = popupView.findViewById(R.id.addressPopup);
-        descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
-        contactsPopup = popupView.findViewById(R.id.contactsPopup);
-        addressPopup.setText(getString(R.string.addressConst) + " " + petModel.getAddress());
-        descriptionPopup.setText(getString(R.string.descriptionConst) + " " + petModel.getDescription());
-        contactsPopup.setText(getString(R.string.contactsConst) + " " + petModel.getContacts());
-
-        // create the popup window
-        int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-        int height = ConstraintLayout.LayoutParams.MATCH_PARENT;
-
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
-    }
-
-
     private void changeFragmentListenerAndBtnBehavior() {
-        vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -186,27 +128,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setButtons() {
-        found = findViewById(R.id.btnFound);
-        found.setOnClickListener(this);
+        btnFound = findViewById(R.id.btnFound);
+        btnFound.setOnClickListener(this);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
-        foundButtonLine = findViewById(R.id.foundBtnLine);
-        lost = findViewById(R.id.btnLost);
-        lost.setOnClickListener(this);
-        lostButtonLine = findViewById(R.id.lostBtnLine);
-        homeless = findViewById(R.id.btnHomeless);
-        homeless.setOnClickListener(this);
-        homelessButtonLine = findViewById(R.id.homelessBtnLine);
-        clearButton = findViewById(R.id.clearButton);
+        lineFound = findViewById(R.id.foundBtnLine);
+        btnLost = findViewById(R.id.btnLost);
+        btnLost.setOnClickListener(this);
+        lineLost = findViewById(R.id.lostBtnLine);
+        btnHomeless = findViewById(R.id.btnHomeless);
+        btnHomeless.setOnClickListener(this);
+        lineHomeless = findViewById(R.id.homelessBtnLine);
+        ImageButton clearButton = findViewById(R.id.clearButton);
         clearButton.setOnClickListener(this);
     }
 
     private void setViewPager() {
-        vpPager = findViewById(R.id.vpPager);
-        vpPager.setOffscreenPageLimit(3);
+        viewPager = findViewById(R.id.vpPager);
+        viewPager.setOffscreenPageLimit(3);
         adapterViewPager = new MyViewPagerAdapter(getSupportFragmentManager());
-        vpPager.setAdapter(adapterViewPager);
-        vpPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setAdapter(adapterViewPager);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
     private void setSearchingView() {
@@ -232,12 +174,15 @@ public class MainActivity extends AppCompatActivity
                 for (CityModel cityModel : citiesList) {
                     if (cityModel.getRu().equals(item) || cityModel.getHe().equals(item) || cityModel.getEn().equals(item)) {
                         cityId = cityModel.getId();
+                        break;
                     }
                 }
-                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
-                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 1);
+                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 0);
+                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 1);
+                ListFragment listFragment2 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 2);
                 listFragment0.getData(cityId);
                 listFragment1.getData(cityId);
+                listFragment2.getData(cityId);
             }
         });
     }
@@ -271,13 +216,13 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_found) {
             // Handle the camera action
-            vpPager.setCurrentItem(0);
+            viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_lost) {
-            vpPager.setCurrentItem(1);
+            viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_homeless) {
-            vpPager.setCurrentItem(2);
+            viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_add) {
-            vpPager.setCurrentItem(3);
+            viewPager.setCurrentItem(3);
         } else if (id == R.id.nav_about) {
             Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(myIntent);
@@ -300,28 +245,21 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void getCitiesData() {
-
-    }
-
     private void getData() {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("cities");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot snapshots,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null || snapshots == null) {
                     return;
                 }
 
-                assert snapshots != null;
                 for (DocumentChange dc : snapshots.getDocumentChanges()) {
                     switch (dc.getType()) {
                         case ADDED:
                             CityModel cm = dc.getDocument().toObject(CityModel.class);
                             cm.setId(dc.getDocument().getId());
                             citiesList.add(cm);
-                            setSearchingView();
                             break;
                         case MODIFIED:
                             break;
@@ -329,6 +267,7 @@ public class MainActivity extends AppCompatActivity
                             break;
                     }
                 }
+                setSearchingView();
 
             }
         });
@@ -338,24 +277,24 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFound:
-                vpPager.setCurrentItem(0);
+                viewPager.setCurrentItem(0);
                 foundButtonSelectedBehavior();
                 break;
             case R.id.btnLost:
-                vpPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1);
                 lostButtonSelectedBehavior();
                 break;
             case R.id.btnHomeless:
-                vpPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2);
                 homelessButtonSelectedBehavior();
                 break;
             case R.id.fab:
-                vpPager.setCurrentItem(3);
+                viewPager.setCurrentItem(3);
                 fabButtonSelectedBehavior();
             case R.id.clearButton:
                 searchingView.setText("");
-                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 0);
-                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(vpPager, 1);
+                ListFragment listFragment0 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 0);
+                ListFragment listFragment1 = (ListFragment) adapterViewPager.instantiateItem(viewPager, 1);
                 listFragment0.getData(null);
                 listFragment1.getData(null);
 
@@ -365,21 +304,21 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressLint("RestrictedApi")
     private void fabButtonSelectedBehavior() {
-        lostButtonLine.setVisibility(View.INVISIBLE);
-        foundButtonLine.setVisibility(View.INVISIBLE);
-        homelessButtonLine.setVisibility(View.INVISIBLE);
+        lineLost.setVisibility(View.INVISIBLE);
+        lineFound.setVisibility(View.INVISIBLE);
+        lineHomeless.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.INVISIBLE);
         appBarLayout.setExpanded(false, true);
     }
 
     @SuppressLint("RestrictedApi")
     private void homelessButtonSelectedBehavior() {
-        homeless.setTextColor(Color.WHITE);
-        homelessButtonLine.setVisibility(View.VISIBLE);
-        lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        lostButtonLine.setVisibility(View.INVISIBLE);
-        found.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        foundButtonLine.setVisibility(View.INVISIBLE);
+        btnHomeless.setTextColor(Color.WHITE);
+        lineHomeless.setVisibility(View.VISIBLE);
+        btnLost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineLost.setVisibility(View.INVISIBLE);
+        btnFound.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineFound.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
         appBarLayout.setVisibility(View.VISIBLE);
         appBarLayout.setExpanded(true, true);
@@ -387,12 +326,12 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressLint("RestrictedApi")
     private void lostButtonSelectedBehavior() {
-        lost.setTextColor(Color.WHITE);
-        lostButtonLine.setVisibility(View.VISIBLE);
-        found.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        foundButtonLine.setVisibility(View.INVISIBLE);
-        homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        homelessButtonLine.setVisibility(View.INVISIBLE);
+        btnLost.setTextColor(Color.WHITE);
+        lineLost.setVisibility(View.VISIBLE);
+        btnFound.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineFound.setVisibility(View.INVISIBLE);
+        btnHomeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineHomeless.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
         appBarLayout.setVisibility(View.VISIBLE);
         appBarLayout.setExpanded(true, true);
@@ -400,12 +339,12 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressLint("RestrictedApi")
     private void foundButtonSelectedBehavior() {
-        found.setTextColor(Color.WHITE);
-        foundButtonLine.setVisibility(View.VISIBLE);
-        lost.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        lostButtonLine.setVisibility(View.INVISIBLE);
-        homeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
-        homelessButtonLine.setVisibility(View.INVISIBLE);
+        btnFound.setTextColor(Color.WHITE);
+        lineFound.setVisibility(View.VISIBLE);
+        btnLost.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineLost.setVisibility(View.INVISIBLE);
+        btnHomeless.setTextColor(Color.parseColor(DEDEDE_COLOR));
+        lineHomeless.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
         appBarLayout.setVisibility(View.VISIBLE);
         appBarLayout.setExpanded(true, true);
@@ -432,11 +371,11 @@ public class MainActivity extends AppCompatActivity
             if (cityModel.getId().equals(id)) {
                 String lang = Locale.getDefault().getLanguage();
                 if (lang.equals("ru")) {
-                    return cityModel.ru;
+                    return cityModel.getRu();
                 } else if (lang.equals("iw")) {
-                    return cityModel.he;
+                    return cityModel.getHe();
                 } else {
-                    return cityModel.en;
+                    return cityModel.getEn();
                 }
             }
         }
@@ -445,7 +384,59 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClicked(PetModel petModel) {
-        onButtonShowPopupWindowClick(foundButtonLine, petModel);
+        onButtonShowPopupWindowClick(lineFound, petModel);
 
+    }
+
+    public void onButtonShowPopupWindowClick(View view, PetModel petModel) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReference().child("photos").child(petModel.getImgId());
+        Log.d("ZAQ", "storageRef:" + storageRef.getPath());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(MainActivity.this)
+                        .load(uri.toString())
+                        .placeholder(R.drawable.photo_not_found)
+                        .error(R.mipmap.ic_launcher)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(petImage);
+            }
+        });
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        View popupView = inflater.inflate(R.layout.popup_window, rootView, false);
+        petImage = popupView.findViewById(R.id.petImage);
+        TextView petCityPopUp = popupView.findViewById(R.id.popupCity);
+        petCityPopUp.setText(getCityById(petModel.getCity()));
+        TextView addressPopup = popupView.findViewById(R.id.addressPopup);
+        TextView descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
+        TextView contactsPopup = popupView.findViewById(R.id.contactsPopup);
+        addressPopup.setText(getString(R.string.addressConst) + " " + petModel.getAddress());
+        descriptionPopup.setText(getString(R.string.descriptionConst) + " " + petModel.getDescription());
+        contactsPopup.setText(getString(R.string.contactsConst) + " " + petModel.getContacts());
+
+        // create the popup window
+        int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        int height = ConstraintLayout.LayoutParams.MATCH_PARENT;
+
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 }
