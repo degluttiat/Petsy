@@ -2,6 +2,10 @@ package app.petsy.model;
 
 import android.support.annotation.Keep;
 
+
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,8 +20,22 @@ public class PetModel {
     private String contacts;
     private String date;
     private String cachedImageUrl;
+    @ServerTimestamp
+    private Date timestamp;
 
     public PetModel() {
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getContacts() {
