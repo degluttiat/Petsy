@@ -267,6 +267,9 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 setSearchingView();
+                // Set searching view in AddPetFragment
+                AddPetFragment fragment = (AddPetFragment) adapterViewPager.instantiateItem(viewPager, 3);
+                fragment.setAutoComplete();
 
             }
         });

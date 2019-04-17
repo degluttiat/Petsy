@@ -95,7 +95,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
 
         searchingView = view.findViewById(R.id.city);
-        setAutoComplete();
+        //setAutoComplete();
     }
 
 
@@ -131,7 +131,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private void onBtnSubmitClick() {
         getTexts();
         PetModel petModel = getPetModel();
-        if (searchingView.getText().toString().isEmpty()){
+        if (searchingView.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), R.string.mandatory, Toast.LENGTH_SHORT).show();
         } else {
             DataProvider.addPet(petModel, imageUri, collectionName);
@@ -207,7 +207,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         return image;
     }
 
-    void setAutoComplete() {
+    public void setAutoComplete() {
         final List<String> cities = new ArrayList<>();
         final List<CityModel> citiesList = mListener.getCityModelList();
         for (CityModel city : citiesList) {
@@ -221,16 +221,6 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         searchingView.setThreshold(1);//will start working from first character
         searchingView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         searchingView.setBackgroundColor(Color.WHITE);
-
-/*        searchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = adapter.getItem(position);
-                String chosenCityID = mListener.getChosenCityID(item);
-            }
-        });*/
-
-
     }
 
 
@@ -275,7 +265,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onImageReceivedFromGallery(Intent data) {
-       imageUri = data.getData();
+        imageUri = data.getData();
 
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
