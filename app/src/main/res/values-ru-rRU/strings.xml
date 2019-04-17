@@ -42,4 +42,5 @@
     <string name="drawer_homeless">Бездомные</string>
     <string name="looking_for_a_home">Ищут дом</string>
     <string name="privacy_policy">Полит. конфид.</string>
+    <string name="publication_date">Дата публикации: %s</string>
 </resources>

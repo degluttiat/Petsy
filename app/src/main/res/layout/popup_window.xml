@@ -98,6 +98,12 @@
             android:text="@string/_123456789"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/dataPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/_123456789"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

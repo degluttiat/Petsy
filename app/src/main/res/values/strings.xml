@@ -37,13 +37,14 @@
     <string name="post">Post submitted</string>
     <string name="mandatory">City is mandatory to fill!</string>
 
-    <string name="search_city">City</string>
+    <string name="search_city" translatable="false">City</string>
     <string name="addressConst">Address: </string>
     <string name="contactsConst">Contacts: </string>
     <string name="descriptionConst">Description: </string>
     <string name="drawer_homeless">Homeless</string>
     <string name="looking_for_a_home">Looking for a home</string>
     <string name="privacy_policy">Privacy policy</string>
+    <string name="publication">Publication date: %s</string>
 
 
 </resources>

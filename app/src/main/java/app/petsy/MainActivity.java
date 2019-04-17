@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -46,7 +47,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -411,9 +414,13 @@ public class MainActivity extends AppCompatActivity
         TextView addressPopup = popupView.findViewById(R.id.addressPopup);
         TextView descriptionPopup = popupView.findViewById(R.id.descriptionPopup);
         TextView contactsPopup = popupView.findViewById(R.id.contactsPopup);
+        TextView dataPopup = popupView.findViewById(R.id.dataPopup);
         addressPopup.setText(String.format("%s %s", getString(R.string.addressConst), petModel.getAddress()));
         descriptionPopup.setText(String.format("%s %s", getString(R.string.descriptionConst), petModel.getDescription()));
         contactsPopup.setText(String.format("%s %s", getString(R.string.contactsConst), petModel.getContacts()));
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = petModel.getTimestamp();
+        dataPopup.setText(String.format(getString(R.string.publication), fmt.format(date)));
 
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;

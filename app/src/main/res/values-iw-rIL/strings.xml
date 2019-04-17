@@ -50,4 +50,5 @@
     <string name="drawer_homeless">הומלס</string>
     <string name="looking_for_a_home">מחפסים בית</string>
     <string name="privacy_policy">מדיניות הפרטיות</string>
+    <string name="publication_date">תאריך פרסום: %s</string>
 </resources>
