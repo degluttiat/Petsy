@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -81,11 +82,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 loadImageWithGlide(uri.toString(), holder);
                 petModel.setCachedImageUrl(uri.toString());
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ZAQ", "onFailure");
+                holder.mImageView.setImageResource(R.drawable.photo_not_found);
+            }
         });
     }
 
     private void loadImageWithGlide(String uri, @NonNull ViewHolder holder) {
-        Log.d("Glide", "Image URL: " + uri.toString());
+        Log.d("Glide", "Image URL: " + uri);
         Glide.with(holder.mImageView.getContext())
                 .load(uri)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

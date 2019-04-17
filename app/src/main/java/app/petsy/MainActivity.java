@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -444,6 +445,11 @@ public class MainActivity extends AppCompatActivity
                         .error(R.mipmap.ic_launcher)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(petImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                petImage.setImageResource(R.drawable.photo_not_found);
             }
         });
     }
