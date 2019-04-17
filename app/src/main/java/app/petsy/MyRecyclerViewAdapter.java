@@ -53,9 +53,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.cityTextView.setText(cityName);
         holder.postDate.setText((petModel.getAddress()));
 
+        holder.mImageView.setImageResource(R.drawable.photo_not_found);
+
         Context context = holder.mImageView.getContext();
         if (!isOnline(context)) {
-            holder.mImageView.setImageResource(R.drawable.photo_not_found);
             return;
         }
 
