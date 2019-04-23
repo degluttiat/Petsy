@@ -2,6 +2,7 @@ package app.petsy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import app.petsy.model.PetModel;
 
@@ -34,6 +43,8 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
     private RecyclerView recyclerView;
     private CollectionReference collectionRef;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
+    private String collectionName;
+    private FirebaseFirestore fb;
 
     public ListFragment() {
         // Required empty public constructor
@@ -61,6 +72,8 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
         View view = inflater.inflate(R.layout.fragment_lost, container, false);
         recyclerView = view.findViewById(R.id.ms_Pictures);
 
+        fb = FirebaseFirestore.getInstance();
+
         setCollectionRef();
         setRecyclerView();
         getData(null);
@@ -70,7 +83,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
     }
 
     private void setCollectionRef() {
-        String collectionName = "";
+        collectionName = "";
         if (type == TYPE_FOUND) {
             collectionName = "foundPets";
         } else if (type == TYPE_LOST) {
@@ -144,6 +157,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
             return;
         }
         assert queryDocumentSnapshots != null;
+        ArrayList<String> petModels = new ArrayList<>();
         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
             switch (dc.getType()) {
                 case ADDED:
@@ -152,6 +166,13 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                     Log.d("ZAQ", "ID: " + id);
                     pm.setImgId(id);
                     myRecyclerViewAdapter.add(pm);
+
+                    Date timestampDate = pm.getTimestamp();
+                    long currentTime = Calendar.getInstance().getTime().getTime()/1000;
+                    long timestampNewTime = timestampDate.getTime()/1000 + 60*60*24*30;
+                    if (currentTime >= timestampNewTime){
+                        petModels.add(dc.getDocument().getId());
+                    }
                     break;
                 case MODIFIED:
                     break;
@@ -159,6 +180,17 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                     break;
             }
         }
+        Log.d("zzz", "petModels " + petModels.size());
+        WriteBatch batch = fb.batch();
+        for (String dc : petModels) {
+            Log.d("zzz", "petModels " + dc);
+            Log.d("zzz", "petModels " + collectionName);
+
+            DocumentReference laRef = fb.collection(collectionName).document(dc);
+            batch.delete(laRef);
+
+        }
+        batch.commit();
     }
 }
 
