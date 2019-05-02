@@ -1,7 +1,10 @@
 package app.petsy;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -74,6 +78,9 @@ public class MainActivity extends AppCompatActivity
     private AutoCompleteTextView searchingView;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
+    SharedPreferences sharedPreferences;
+    String sharedPreferencesBoolean = "sharedPreferencesBoolean";
+    private boolean spBoolean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +104,35 @@ public class MainActivity extends AppCompatActivity
 
         getData();
 
+        sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE);
+        spBoolean = sharedPreferences.getBoolean(sharedPreferencesBoolean, false);
+
+        if (!spBoolean) {
+            getDialogWindow();
+        }
+
+
         //throw new IllegalStateException("Test");
+    }
+
+    private void getDialogWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Как это работает?")
+                .setMessage(R.string.message)
+                .setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setNegativeButton("ОК",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(sharedPreferencesBoolean, true);
+        editor.apply();
     }
 
     private void changeFragmentListenerAndBtnBehavior() {
