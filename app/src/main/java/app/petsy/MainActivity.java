@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getDialogWindow() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Как это работает?")
+        builder.setTitle(R.string.title)
                 .setMessage(R.string.message)
                 .setIcon(R.mipmap.ic_launcher)
                 .setCancelable(false)

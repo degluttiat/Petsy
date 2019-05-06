@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Petsy app</string>
-    <string name="nav_header_subtitle">support@petsy.app</string>
+    <string name="nav_header_subtitle" translatable="false">app.petsy@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -46,6 +46,7 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="publication">Publication date: %s</string>
     <string name="message">Перед вами аппликация по поиску  пропавших/найденных животных.  Внизу есть 3 раздела: \n* Найденные - предположительно домашние животные, которые были найдены на улице, без хозяина. \n* Потерянные - потерянные животные, чью пропажу опубликовали хозяева. \n* Бездомные - никому не принадлежащие животные, которым ищут дом. \nЗнак \'+\' в правом нижнем углу, позволяет добавить животное в любую категорию.</string>
+    <string name="title">Как это работает?</string>
 
 
 </resources>
