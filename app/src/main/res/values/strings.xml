@@ -45,8 +45,9 @@
     <string name="looking_for_a_home">Looking for a home</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="publication">Publication date: %s</string>
-    <string name="message">Перед вами аппликация по поиску  пропавших/найденных животных.  Внизу есть 3 раздела: \n* Найденные - предположительно домашние животные, которые были найдены на улице, без хозяина. \n* Потерянные - потерянные животные, чью пропажу опубликовали хозяева. \n* Бездомные - никому не принадлежащие животные, которым ищут дом. \nЗнак \'+\' в правом нижнем углу, позволяет добавить животное в любую категорию.</string>
-    <string name="title">Как это работает?</string>
+    <string name="title">How it works?</string>
+    <string name="publication_date">Publication date: %s</string>
+    <string name="message">"The following app is used for searching for missing / found animals.  \n\nThe bottom menu includes the following 3 sections:  \n\n* Found - presumably someone’s pets, which were found hanging around without supervision.  \n\n* Lost - reports regarding lost pets, published by their owners.  \n\n* Homeless - animals that don’t belong to anyone, that are looking for a new home.  \n\nThe ‘+’ sign at the lower right corner, allows you to add an animal to any of these categories. "</string>
 
 
 </resources>
