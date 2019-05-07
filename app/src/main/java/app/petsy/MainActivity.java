@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE);
         spBoolean = sharedPreferences.getBoolean(sharedPreferencesBoolean, false);
 
-        if (spBoolean) {
+        if (!spBoolean) {
             getDialogWindow();
         }
 
