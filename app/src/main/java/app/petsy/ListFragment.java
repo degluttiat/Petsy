@@ -2,7 +2,6 @@ package app.petsy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -45,6 +43,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
     private String collectionName;
     private FirebaseFirestore fb;
+    private ListenerRegistration registration;
 
     public ListFragment() {
         // Required empty public constructor
@@ -96,15 +95,18 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
     }
 
     public void getData(String cityId) {
+        if (registration != null) {
+            registration.remove();
+        }
         if (cityId != null) {
             myRecyclerViewAdapter.clearCollection();
-            collectionRef
+            registration = collectionRef
                     .whereEqualTo("city", cityId)
                     .orderBy("timestamp", Query.Direction.ASCENDING)
                     .addSnapshotListener(this);
         } else {
             myRecyclerViewAdapter.clearCollection();
-            collectionRef
+            registration = collectionRef
                     .orderBy("timestamp", Query.Direction.ASCENDING)
                     .addSnapshotListener(this);
         }
@@ -147,6 +149,7 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
      */
     public interface OnFragmentInteractionListener {
         String getCityById(String id);
+
         void onItemClicked(PetModel petModel);
     }
 
@@ -168,9 +171,12 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
                     myRecyclerViewAdapter.add(pm);
 
                     Date timestampDate = pm.getTimestamp();
-                    long currentTime = Calendar.getInstance().getTime().getTime()/1000;
-                    long timestampNewTime = timestampDate.getTime()/1000 + 60*60*24*30;
-                    if (currentTime >= timestampNewTime){
+                    if (timestampDate == null) {
+                        break;
+                    }
+                    long currentTime = Calendar.getInstance().getTime().getTime() / 1000;
+                    long timestampNewTime = timestampDate.getTime() / 1000 + 60 * 60 * 24 * 30;
+                    if (currentTime >= timestampNewTime) {
                         petModels.add(dc.getDocument().getId());
                     }
                     break;

@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -455,8 +454,9 @@ public class MainActivity extends AppCompatActivity
         contactsPopup.setText(String.format("%s %s", getString(R.string.contactsConst), petModel.getContacts()));
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = petModel.getTimestamp();
-        dataPopup.setText(String.format(getString(R.string.publication), fmt.format(date)));
-
+        if (date != null) {
+            dataPopup.setText(String.format(getString(R.string.publication), fmt.format(date)));
+        }
         // create the popup window
         int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
         int height = ConstraintLayout.LayoutParams.MATCH_PARENT;
