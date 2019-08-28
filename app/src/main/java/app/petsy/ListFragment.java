@@ -17,6 +17,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.MetadataChanges;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -103,12 +104,12 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
             registration = collectionRef
                     .whereEqualTo("city", cityId)
                     .orderBy("timestamp", Query.Direction.ASCENDING)
-                    .addSnapshotListener(this);
+                    .addSnapshotListener(MetadataChanges.INCLUDE, this);
         } else {
             myRecyclerViewAdapter.clearCollection();
             registration = collectionRef
                     .orderBy("timestamp", Query.Direction.ASCENDING)
-                    .addSnapshotListener(this);
+                    .addSnapshotListener(MetadataChanges.INCLUDE, this);
         }
 
     }
@@ -165,9 +166,8 @@ public class ListFragment extends Fragment implements EventListener<QuerySnapsho
             switch (dc.getType()) {
                 case ADDED:
                     PetModel pm = dc.getDocument().toObject(PetModel.class);
-                    String id = dc.getDocument().getId();
-                    Log.d("ZAQ", "ID: " + id);
-                    pm.setImgId(id);
+                    /*String id = dc.getDocument().getId();
+                    pm.setImgId(id);*/
                     myRecyclerViewAdapter.add(pm);
 
                     Date timestampDate = pm.getTimestamp();

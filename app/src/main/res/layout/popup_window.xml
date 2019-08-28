@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="20dp"
     android:paddingTop="50dp"
     android:paddingRight="20dp"
@@ -81,28 +82,28 @@
             android:id="@+id/addressPopup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_123456789"
+            tools:text="@string/_123456789"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/descriptionPopup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_123456789"
+            tools:text="@string/_123456789"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/contactsPopup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_123456789"
+            tools:text="@string/_123456789"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/dataPopup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/_123456789"
+            tools:text="@string/_123456789"
             android:textSize="14sp" />
 
     </LinearLayout>

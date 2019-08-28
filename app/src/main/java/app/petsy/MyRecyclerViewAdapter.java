@@ -75,6 +75,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     private void getImageUrlFromFireStoreAndDownload(@NonNull final ViewHolder holder, final PetModel petModel) {
+        if (petModel.getImgId() == null || petModel.getImgId().isEmpty()){
+            Log.d("ZAQ", "Image Id is null or empty");
+            holder.mImageView.setImageResource(R.drawable.photo_not_found);
+            return;
+        }
         final StorageReference storageRef = photosRef.child(petModel.getImgId());
         Log.d("ZAQ", "storageRef:" + storageRef.getPath());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import app.petsy.model.PetModel;
@@ -35,6 +36,12 @@ public class DataProvider {
                 });
     }
 
+
+    public static void addPet(PetModel petModel, String collectionName) {
+        FirebaseFirestore.getInstance().collection(collectionName)
+                .add(petModel);
+    }
+
     private static void uploadImage(String id, Uri uri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference().child("photos");
@@ -45,7 +52,7 @@ public class DataProvider {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.d("qqq", "Fail to upload image");
+                Log.d("qqq", "Fail to upload image, " + exception.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -55,5 +62,25 @@ public class DataProvider {
         });
     }
 
+    public static String uploadImage(Uri uri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("photos");
 
+        String id = String.valueOf(System.currentTimeMillis());
+        StorageReference fileRef = storageRef.child(id);
+        UploadTask uploadTask = fileRef.putFile(uri);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("qqq", "Fail to upload image, " + exception.getMessage());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("qqq", "uploaded image");
+            }
+        });
+        return id;
+    }
 }

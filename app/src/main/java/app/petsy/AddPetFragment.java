@@ -57,6 +57,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private String descrition;
     private Uri imageUri;
     private File photoFileForCamera;
+    private String imageFirebaseStorageId;
 
 
     public AddPetFragment() {
@@ -134,7 +135,8 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         if (searchingView.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), R.string.mandatory, Toast.LENGTH_SHORT).show();
         } else {
-            DataProvider.addPet(petModel, imageUri, collectionName);
+            petModel.setImgId(imageFirebaseStorageId);
+            DataProvider.addPet(petModel, collectionName);
             clearData();
             Toast.makeText(getContext(), R.string.post, Toast.LENGTH_SHORT).show();
         }
@@ -171,7 +173,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create the File where the photo should go
             try {
-                photoFileForCamera = createImageFile();
+                photoFileForCamera = createEmptyImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
@@ -191,7 +193,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_FROM_GALLERY);
     }
 
-    private File createImageFile() throws IOException {
+    private File createEmptyImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -208,6 +210,9 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setAutoComplete() {
+        if (mListener == null){
+            return;
+        }
         final List<String> cities = new ArrayList<>();
         final List<CityModel> citiesList = mListener.getCityModelList();
         for (CityModel city : citiesList) {
@@ -262,6 +267,8 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
         imageView.setImageBitmap(bitmap);
+
+        sendImageToServer();
     }
 
     private void onImageReceivedFromGallery(Intent data) {
@@ -273,6 +280,12 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        sendImageToServer();
+    }
+
+    private void sendImageToServer() {
+        imageFirebaseStorageId = DataProvider.uploadImage(imageUri);
     }
 
     @Override
